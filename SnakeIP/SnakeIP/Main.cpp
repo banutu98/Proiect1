@@ -3,7 +3,7 @@
 #include <time.h>
 using namespace std;
 struct snake {
-	int x, y;
+	int x=24, y=20;
 }s[100];
 int directie = 0, lungime = 4;
 void Rotire()
