@@ -5,7 +5,7 @@ using namespace std;
 struct snake {
 	int x=24, y=20;
 }s[100];
-int directie = 0, lungime = 4;
+int directie = 2, lungime = 4;
 void Rotire()
 {
 	for (int index = lungime; index>0; index--)
@@ -15,6 +15,12 @@ void Rotire()
 	}
 	if (directie == 0)
 		s[0].y += 1;
+	if (directie == 1)
+		s[0].x -= 1;
+	if (directie == 2)
+		s[0].x += 1;
+	if (directie == 3)
+		s[0].y -= 1;
 }
 int main()
 {
@@ -37,6 +43,15 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && directie != 2)
+			directie = 1;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && directie != 1)
+			directie = 2;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && directie != 0)
+			directie = 3;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && directie != 3)
+			directie = 0;
 
 		if (timer > delay)
 		{
