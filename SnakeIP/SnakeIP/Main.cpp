@@ -12,7 +12,7 @@ struct food
 {
 	int x=8, y=10;
 }f;
-int directie = 2, lungime = 4;
+int directie = 2, lungime = 4, lungime_init = lungime;
 void Rotire()
 {
 	for (int index = lungime; index>0; index--)
@@ -38,7 +38,7 @@ void Rotire()
 int main()
 {
 	srand(0);
-	sf::RenderWindow window(sf::VideoMode(800, 640), "Snake v1.0");
+	sf::RenderWindow window(sf::VideoMode(800, 640), "Snake v2.0");
 	window.setFramerateLimit(60);
 	sf::Texture t1, t2, t3;
 	t1.loadFromFile("green.png");
@@ -84,8 +84,16 @@ int main()
 			sarpe.setPosition(s[index].x * 16, s[index].y * 16);
 			window.draw(sarpe);
 		}
-		mancare.setPosition(f.x*16, f.y*16);
-		window.draw(mancare);
+		if ((lungime_init - lungime) % 5 == 0 && lungime != lungime_init)
+		{
+			stea.setPosition(f.x * 16, f.y * 16);
+			window.draw(stea);
+		}
+		else
+		{
+			mancare.setPosition(f.x * 16, f.y * 16);
+			window.draw(mancare);
+		}
 		window.display();
 	}
 
