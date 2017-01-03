@@ -2,9 +2,16 @@
 #include <iostream>
 #include <time.h>
 using namespace std;
-struct snake {
-	int x=24, y=20;
+
+struct snake 
+{
+	int x=800/32, y=640/32;
 }s[100];
+
+struct food
+{
+	int x=8, y=10;
+}f;
 int directie = 2, lungime = 4;
 void Rotire()
 {
@@ -21,13 +28,25 @@ void Rotire()
 		s[0].x += 1;
 	if (directie == 3)
 		s[0].y -= 1;
+	if (s[0].x == f.x&&s[0].y == f.y)
+	{
+		lungime++;
+		f.x = rand() % 800/16;
+		f.y = rand() % 640/16;
+	}
 }
 int main()
 {
+	srand(0);
 	sf::RenderWindow window(sf::VideoMode(800, 640), "Snake v1.0");
-	sf::Texture t;
-	t.loadFromFile("white.png");
-	sf::Sprite sprite(t);
+	window.setFramerateLimit(60);
+	sf::Texture t1, t2, t3;
+	t1.loadFromFile("green.png");
+	t2.loadFromFile("food.png");
+	t3.loadFromFile("star.png");
+	sf::Sprite sarpe(t1);
+	sf::Sprite mancare(t2);
+	sf::Sprite stea(t3);
 	sf::Clock clock;
 	float timer = 0, delay = 0.1;
 
@@ -62,9 +81,11 @@ int main()
 
 		for (int index = 0; index < lungime; index++)
 		{
-			sprite.setPosition(s[index].x * 16, s[index].y * 16);
-			window.draw(sprite);
+			sarpe.setPosition(s[index].x * 16, s[index].y * 16);
+			window.draw(sarpe);
 		}
+		mancare.setPosition(f.x*16, f.y*16);
+		window.draw(mancare);
 		window.display();
 	}
 
