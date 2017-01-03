@@ -1,73 +1,85 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <time.h>
-using namespace std;
+using namespace sf;
 
-struct snake 
+//declarari
+RenderWindow window(VideoMode(800, 640), "Snake v2.1");
+Texture t1, t2, t3;
+float timer = 0;
+int aparut = 0;
+
+struct Snake
 {
-	int x=800/32, y=640/32;
-}s[100];
+	int x, y;
+}snake[100];
 
-struct food
+struct Food
 {
 	int x=8, y=10;
-}f;
-struct stea
+}food;
+
+struct Star
 {
 	int x=12, y=4;
-}spec;
-int directie = 2, lungime = 4, lungime_init = lungime, nr_mancate = 0, OK = 1, nr_mutari = 0;
-float delay = 0.2;
-void Rotire()
+}star;
+
+
+int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0;
+float delay = 0.3;
+
+void miscareSarpe()
 {
+	//miscare sarpe
 	for (int index = lungime; index>0; index--)
 	{
-		s[index].x = s[index - 1].x;
-		s[index].y = s[index - 1].y;
+		snake[index].x = snake[index - 1].x;
+		snake[index].y = snake[index - 1].y;
 	}
 	if (directie == 0)
-		s[0].y += 1;
+		snake[0].y += 1;
 	if (directie == 1)
-		s[0].x -= 1;
+		snake[0].x -= 1;
 	if (directie == 2)
-		s[0].x += 1;
+		snake[0].x += 1;
 	if (directie == 3)
-		s[0].y -= 1;
-	if (s[0].x == f.x && s[0].y == f.y)
+		snake[0].y -= 1;
+
+	//fruct
+	if (snake[0].x == food.x && snake[0].y == food.y)
 	{
 		lungime++;
-		f.x = rand() % 800/16;
-		f.y = rand() % 640/16;
+		food.x = rand() % 800/16;
+		food.y = rand() % 640/16;
 		if (nr_mancate % 2 == 0) 
 		{
-			delay -= 0.01; 
+			if (delay > 0.1)
+				delay -= 0.04; 
 			nr_mutari = 0;
 			OK = 1;
 		}
 	}
-	if (s[0].x == spec.x && s[0].y == spec.y)
+
+	//steaua
+	if (snake[0].x == star.x && snake[0].y == star.y)
 	{
 		lungime++;
-		spec.x = rand() % 800 / 16;
-		spec.y = rand() % 640 / 16;
-		if (nr_mancate % 2 == 0) delay -= 0.004;
+		star.x = rand() % 800 / 16;
+		star.y = rand() % 640 / 16;
+		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.04;
 	}
 }
-int main()
+
+
+void snakeOnGoing()
 {
+	Clock clock;
 	srand(0);
-	sf::RenderWindow window(sf::VideoMode(800, 640), "Snake v2.1");
 	window.setFramerateLimit(60);
-	sf::Texture t1, t2, t3;
 	t1.loadFromFile("green.png");
 	t2.loadFromFile("food.png");
 	t3.loadFromFile("star.png");
-	sf::Sprite sarpe(t1);
-	sf::Sprite mancare(t2);
-	sf::Sprite stea(t3);
-	sf::Clock clock;
-	float timer = 0;
-	int aparut = 0;
+	Sprite sarpe(t1), mancare(t2), stea(t3);
 
 	while (window.isOpen())
 	{
@@ -75,40 +87,40 @@ int main()
 		clock.restart();
 		timer += timp;
 
-		sf::Event event;
+		Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			if (event.type == Event::Closed)
 				window.close();
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && directie != 2)
+		if (Keyboard::isKeyPressed(Keyboard::Left) && directie != 2)
 			directie = 1;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && directie != 1)
+		if (Keyboard::isKeyPressed(Keyboard::Right) && directie != 1)
 			directie = 2;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && directie != 0)
+		if (Keyboard::isKeyPressed(Keyboard::Up) && directie != 0)
 			directie = 3;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && directie != 3)
+		if (Keyboard::isKeyPressed(Keyboard::Down) && directie != 3)
 			directie = 0;
 
 		if (timer > delay)
 		{
 			timer = 0;
-			Rotire();
-			if (aparut == 1 && OK==1)
+			miscareSarpe();
+			if (aparut == 1 && OK == 1)
 				nr_mutari++;
 		}
 		window.clear();
-		
-		if ((lungime_init - lungime) % 5 == 0 && lungime != lungime_init)
+
+		if((lungime_init - lungime) % 5 == 0 && lungime != lungime_init)
 		{
 			aparut = 1;
-			if (OK == 1 && nr_mutari<=30)
+			if (OK == 1 && nr_mutari <= 30)
 			{
-				stea.setPosition(spec.x * 16, spec.y * 16);
+				stea.setPosition(star.x * 16, star.y * 16);
 				window.draw(stea);
 			}
-			else 
+			else
 			{
 				window.clear();
 				OK = 0;
@@ -116,13 +128,35 @@ int main()
 		}
 		for (int index = 0; index < lungime; index++)
 		{
-			sarpe.setPosition(s[index].x * 16, s[index].y * 16);
+			sarpe.setPosition(snake[index].x * 16, snake[index].y * 16);
 			window.draw(sarpe);
 		}
-			mancare.setPosition(f.x * 16, f.y * 16);
-			window.draw(mancare);
+		mancare.setPosition(food.x * 16, food.y * 16);
+		window.draw(mancare);
 		window.display();
 	}
+}
 
+void initLabirint0()
+{
+	lungime = 4;
+	lungime_init = lungime;
+	snake[0].x = 800 / 32;
+	snake[0].y = 640 / 32;
+	
+	for (int index = 1; index < lungime; index++)
+	{
+		snake[index].x = snake[index - 1].x - 16;
+		snake[index].y = snake[index - 1].y;
+	}
+
+	if (Keyboard::isKeyPressed(Keyboard::Space))
+		snakeOnGoing();
+}
+
+int main()
+{
+	while (window.isOpen())
+		initLabirint0();
 	return 0;
 }
