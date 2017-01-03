@@ -1,7 +1,9 @@
 ﻿  Main.cpp
-c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(51): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(84): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(94): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(20): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(43): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(53): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(108): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(119): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\documents\visual studio 2015\projects\snakeip\snakeip\main.cpp(122): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   SnakeIP.vcxproj -> C:\Users\Serban\documents\visual studio 2015\Projects\SnakeIP\Debug\SnakeIP.exe
   SnakeIP.vcxproj -> C:\Users\Serban\documents\visual studio 2015\Projects\SnakeIP\Debug\SnakeIP.pdb (Full PDB)
