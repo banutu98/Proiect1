@@ -5,7 +5,7 @@ using namespace sf;
 
 //declarari
 RenderWindow window(VideoMode(800, 640), "Snake v2.1");
-Texture t1, t2, t3;
+Texture t1, t2, t3, t4, t5;
 float timer = 0;
 int aparut = 0;
 
@@ -24,6 +24,15 @@ struct Star
 	int x=12, y=4;
 }star;
 
+struct Slow
+{
+	int x=16, y=16;
+}slow;
+
+struct Less
+{
+	int x=3, y=17;
+}less;
 
 int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0, verif = 0;
 float delay = 0.3;
@@ -100,10 +109,13 @@ void miscareSarpe()
 		nr_mancate++;
 		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.04;
 	}
+
+	//trecerea prin pereti
 	if (snake[0].x>800/16) snake[0].x = 0;
-	if (snake[0].x<0) snake[0].x = 800/16;
+	else if (snake[0].x<0) snake[0].x = 800/16;
 	if (snake[0].y>640/16) snake[0].y = 0;
-	if (snake[0].y<0) snake[0].y = 640/16;
+	else if (snake[0].y<0) snake[0].y = 640/16;
+
 }
 
 
@@ -115,14 +127,15 @@ void snakeOnGoing()
 	t1.loadFromFile("green.png");
 	t2.loadFromFile("food.png");
 	t3.loadFromFile("star.png");
-	Sprite sarpe(t1), mancare(t2), stea(t3);
+	t4.loadFromFile("clock.png");
+	t5.loadFromFile("minus.png");
+	Sprite sarpe(t1), mancare(t2), stea(t3), incetinire(t4), scurtare(t5);
 
 	while (window.isOpen())
 	{
 		float timp = clock.getElapsedTime().asSeconds();
 		clock.restart();
 		timer += timp;
-
 		Event event;
 		while (window.pollEvent(event))
 		{

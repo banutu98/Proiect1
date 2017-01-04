@@ -1,9 +1,9 @@
 ﻿  Main.cpp
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(29): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(69): warning C4305: '-=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(101): warning C4305: '-=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(158): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(169): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(172): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(38): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(78): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(110): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(171): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(182): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(185): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   SnakeIP.vcxproj -> C:\Users\Serban\Desktop\Proiect1\SnakeIP\Debug\SnakeIP.exe
   SnakeIP.vcxproj -> C:\Users\Serban\Desktop\Proiect1\SnakeIP\Debug\SnakeIP.pdb (Full PDB)
