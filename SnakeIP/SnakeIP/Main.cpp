@@ -35,7 +35,7 @@ struct Less
 }less;
 
 int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0, verif = 0, counter = 1, is_rand = 0, r, specialX, specialY;
-float delay = 0.1;
+float delay = 0.2;
 
 void miscareSarpe()
 {
@@ -59,7 +59,6 @@ void miscareSarpe()
 	{
 		lungime++;
 		counter++;
-		is_rand = 1;
 		food.x = rand() % 800/16;
 		food.y = rand() % 640/16;
 		int sigur = 1;
@@ -77,7 +76,7 @@ void miscareSarpe()
 		} while (sigur == 0);
 		nr_mancate++;
 		if (nr_mancate % 2 == 0 && delay > 0.1) 
-			delay -= 0.04;
+			delay -= 0.02;
 		if (nr_mancate % 3 == 0)
 		{
 			nr_mutari = 0;
@@ -91,16 +90,18 @@ void miscareSarpe()
 	{
 		verif = 0;
 		nr_mancate++;
-		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.04;
+		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.02;
+		window.clear();
 	}
 	
 	//slow
 	if (snake[0].x == slow.x && snake[0].y == slow.y)
 	{
-		delay += 0.14;
+		delay += 0.12;
 		verif = 0;
 		nr_mancate++;
-		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.04;
+		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.02;
+		window.clear();
 	}
 
 	//scadere lungime
@@ -109,8 +110,10 @@ void miscareSarpe()
 		lungime /= 2;
 		verif = 0;
 		nr_mancate++;
-		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.04;
+		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.02;
+		window.clear();
 	}
+
 	//trecerea prin pereti
 	if (snake[0].x>=800/16) snake[0].x = 0;
 	else if(snake[0].x<0) snake[0].x = 784/16;
@@ -205,7 +208,7 @@ void snakeOnGoing()
 					incetinire.setPosition(slow.x * 16, slow.y * 16);
 					window.draw(incetinire);
 				}
-				else 
+				else if (r == 3)
 				{
 					less.x = specialX;
 					less.y = specialY;
@@ -216,6 +219,7 @@ void snakeOnGoing()
 			else
 			{
 				OK = 0;
+				is_rand = 1;
 				window.clear();
 			}
 		}
