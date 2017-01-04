@@ -21,21 +21,21 @@ struct Food
 
 struct Star
 {
-	int x=12, y=4;
+	int x, y;
 }star;
 
 struct Slow
 {
-	int x=16, y=16;
+	int x, y;
 }slow;
 
 struct Less
 {
-	int x=3, y=17;
+	int x, y;
 }less;
 
-int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0, verif = 0;
-float delay = 0.3;
+int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0, verif = 0, counter = 1, is_rand = 0, r, specialX, specialY;
+float delay = 0.1;
 
 void miscareSarpe()
 {
@@ -58,6 +58,8 @@ void miscareSarpe()
 	if (snake[0].x == food.x && snake[0].y == food.y)
 	{
 		lungime++;
+		counter++;
+		is_rand = 1;
 		food.x = rand() % 800/16;
 		food.y = rand() % 640/16;
 		int sigur = 1;
@@ -87,34 +89,33 @@ void miscareSarpe()
 	//steaua
 	if (snake[0].x == star.x && snake[0].y == star.y)
 	{
-		lungime++;
 		verif = 0;
-		star.x = rand() % 800 / 16;
-		star.y = rand() % 640 / 16;
-		int sigur = 1;
-		do
-		{
-			sigur = 1;
-			for (int index = 0; index < lungime; index++)
-				if (snake[index].x == star.x && snake[index].y == star.y)
-					sigur = 0;
-			if (star.x == food.x && star.y == food.y)
-				sigur = 0;
-			if (sigur == 0)
-			{
-				star.x = rand() % 800 / 16;
-				star.y = rand() % 640 / 16;
-			}
-		} while (sigur == 0);
+		nr_mancate++;
+		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.04;
+	}
+	
+	//slow
+	if (snake[0].x == slow.x && snake[0].y == slow.y)
+	{
+		delay += 0.14;
+		verif = 0;
 		nr_mancate++;
 		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.04;
 	}
 
+	//scadere lungime
+	if (snake[0].x == less.x && snake[0].y == less.y)
+	{
+		lungime /= 2;
+		verif = 0;
+		nr_mancate++;
+		if (nr_mancate % 2 == 0 && delay > 0.1) delay -= 0.04;
+	}
 	//trecerea prin pereti
-	if (snake[0].x>800/16) snake[0].x = 0;
-	else if (snake[0].x<0) snake[0].x = 800/16;
-	if (snake[0].y>640/16) snake[0].y = 0;
-	else if (snake[0].y<0) snake[0].y = 640/16;
+	if (snake[0].x>=800/16) snake[0].x = 0;
+	else if(snake[0].x<0) snake[0].x = 784/16;
+	if (snake[0].y>=640/16) snake[0].y = 0;
+	else if (snake[0].y<0) snake[0].y = 624/16;
 
 }
 
@@ -161,20 +162,61 @@ void snakeOnGoing()
 		}
 		window.clear();
 
-		if ((lungime - lungime_init) % 5 == 0 && lungime != lungime_init)
+		if (counter % 5 == 0)
 			verif = 1;
 		if (verif == 1)
 		{
-			aparut = 1;
-			if (OK == 1 && nr_mutari <= 30)
+			if (is_rand == 1)
 			{
-				stea.setPosition(star.x * 16, star.y * 16);
-				window.draw(stea);
+				specialX = rand() % 800 / 16;
+				specialY = rand() % 640 / 16;
+				int sigur = 1;
+				do
+				{
+					sigur = 1;
+					for (int index = 0; index < lungime; index++)
+						if (snake[index].x == specialX && snake[index].y == specialY)
+							sigur = 0;
+					if (specialX == food.x && specialY == food.y)
+						sigur = 0;
+					if (sigur == 0)
+					{
+						specialX = rand() % 800 / 16;
+						specialY = rand() % 640 / 16;
+					}
+				} while (sigur == 0);
+				r = rand() % 3 + 1;
+				is_rand = 0;
+			}
+			aparut = 1;
+			if (OK == 1 && nr_mutari <= 50)
+			{
+				if (r == 1)
+				{
+					star.x = specialX;
+					star.y = specialY;
+					stea.setPosition(star.x * 16, star.y * 16);
+					window.draw(stea);
+				}
+				else if (r == 2)
+				{
+					slow.x = specialX;
+					slow.y = specialY;
+					incetinire.setPosition(slow.x * 16, slow.y * 16);
+					window.draw(incetinire);
+				}
+				else 
+				{
+					less.x = specialX;
+					less.y = specialY;
+					scurtare.setPosition(less.x * 16, less.y * 16);
+					window.draw(scurtare);
+				}
 			}
 			else
 			{
-				window.clear();
 				OK = 0;
+				window.clear();
 			}
 		}
 		for (int index = 0; index < lungime; index++)
