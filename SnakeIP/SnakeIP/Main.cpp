@@ -15,7 +15,7 @@ ifstream fin6("labirint6.txt");
 
 //declarari
 RenderWindow window(VideoMode(640, 480), "Snake v4.0");
-Texture t1, t2, t3, t4, t5;
+Texture t1, t2, t3, t4, t5, t6;
 float timer = 0;
 int aparut = 0;
 
@@ -80,6 +80,8 @@ void miscareSarpe()
 					sigur = 0;
 			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
 				sigur = 0;
+			if (labirint[food.y][food.x] == 1)
+				sigur = 0;
 			if (sigur == 0)
 			{
 				food.x = rand() % 640 / 16;
@@ -103,6 +105,8 @@ void miscareSarpe()
 		este_mancat = 0;
 		counter++;
 		is_rand = 1;
+		star.x = -2;
+		star.y = -2;
 	}
 	
 	//slow
@@ -113,6 +117,8 @@ void miscareSarpe()
 		este_mancat = 0;
 		counter++;
 		is_rand = 1;
+		slow.x = -2;
+		slow.y = -2;
 	}
 
 	//scadere lungime
@@ -123,6 +129,8 @@ void miscareSarpe()
 		este_mancat = 0;
 		counter++;
 		is_rand = 1;
+		cut.x = -2;
+		cut.y = -2;
 	}
 
 	//trecerea prin pereti
@@ -134,18 +142,27 @@ void miscareSarpe()
 
 }
 
-
+bool coliziune()
+{
+	if (labirint[snake[0].y][snake[0].x] == 1)
+		return true;
+	for (int index = 1; index < lungime; index++)
+		if (snake[index].x == snake[0].x && snake[index].y == snake[0].y)
+			return true;
+	return false;
+}
 void snakeOnGoing()
 {
 	Clock clock;
 	srand(time(0));
-	window.setFramerateLimit(60);
+	window.setFramerateLimit(30);
 	t1.loadFromFile("green.png");
 	t2.loadFromFile("food.png");
 	t3.loadFromFile("star.png");
 	t4.loadFromFile("clock.png");
 	t5.loadFromFile("minus2.png");
-	Sprite sarpe(t1), mancare(t2), stea(t3), incetinire(t4), scurtare(t5);
+	t6.loadFromFile("wall.png");
+	Sprite sarpe(t1), mancare(t2), stea(t3), incetinire(t4), scurtare(t5), zid(t6);
 
 	while (window.isOpen())
 	{
@@ -167,11 +184,12 @@ void snakeOnGoing()
 			directie = 3;
 		if (Keyboard::isKeyPressed(Keyboard::Down) && directie != 3)
 			directie = 0;
-
 		if (timer > delay)
 		{
 			timer = 0;
 			miscareSarpe();
+			if (coliziune() == true)
+				cout << "crash";
 			if (aparut == 1)
 				nr_mutari++;
 		}
@@ -195,6 +213,8 @@ void snakeOnGoing()
 					if (specialX == food.x && specialY == food.y)
 						sigur = 0;
 					if (specialX >= (640 / 16) - 1 || specialX <= 1 || specialY <= 1 || specialY >= (480 / 16) - 1)
+						sigur = 0;
+					if (labirint[specialX][specialY] == 1)
 						sigur = 0;
 					if (sigur == 0)
 					{
@@ -249,8 +269,8 @@ void snakeOnGoing()
 			{
 				if (labirint[i][j] == 1)
 				{
-					sarpe.setPosition(j * 16, i * 16);
-					window.draw(sarpe);
+					zid.setPosition(j * 16, i * 16);
+					window.draw(zid);
 				}
 			}
 
