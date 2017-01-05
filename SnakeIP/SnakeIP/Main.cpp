@@ -1,17 +1,27 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <fstream>
 #include <time.h>
 using namespace sf;
+using namespace std;
+
+//fisiere
+ifstream fin1("labirint1.txt");
+ifstream fin2("labirint2.txt");
+ifstream fin3("labirint3.txt");
+ifstream fin4("labirint4.txt");
+ifstream fin5("labirint5.txt");
+ifstream fin6("labirint6.txt");
 
 //declarari
-RenderWindow window(VideoMode(800, 640), "Snake v3.0");
+RenderWindow window(VideoMode(640, 480), "Snake v4.0");
 Texture t1, t2, t3, t4, t5;
 float timer = 0;
 int aparut = 0;
 
 struct Snake
 {
-	int x=800/32, y=640/32;
+	int x=640/32, y=480/32;
 }snake[100];
 
 struct Food
@@ -29,13 +39,14 @@ struct Slow
 	int x=-2, y=-2;
 }slow;
 
-struct Less
+struct Cut
 {
 	int x=-2, y=-2;
-}less;
+}cut;
 
 int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0;
 float delay = 0.3;
+int labirint[30][40];
 
 void miscareSarpe()
 {
@@ -58,8 +69,8 @@ void miscareSarpe()
 	if (snake[0].x == food.x && snake[0].y == food.y)
 	{
 		lungime++;
-		food.x = rand() % 800/16;
-		food.y = rand() % 640/16;
+		food.x = rand() % 640/16;
+		food.y = rand() % 480/16;
 		int sigur = 1;
 		do
 		{
@@ -67,12 +78,12 @@ void miscareSarpe()
 			for (int index = 0; index < lungime; index++)
 				if (snake[index].x == food.x && snake[index].y == food.y)
 					sigur = 0;
-			if (food.x >= (800 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (640 / 16) - 1)
+			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
 				sigur = 0;
 			if (sigur == 0)
 			{
-				food.x = rand() % 800 / 16;
-				food.y = rand() % 640 / 16;
+				food.x = rand() % 640 / 16;
+				food.y = rand() % 480 / 16;
 			}
 		} while (sigur == 0);
 		nr_mancate++;
@@ -105,7 +116,7 @@ void miscareSarpe()
 	}
 
 	//scadere lungime
-	if (snake[0].x == less.x && snake[0].y == less.y)
+	if (snake[0].x == cut.x && snake[0].y == cut.y)
 	{
 		if (lungime > 3)
 			lungime /= 2;
@@ -115,10 +126,11 @@ void miscareSarpe()
 	}
 
 	//trecerea prin pereti
-	if (snake[0].x>=800/16) snake[0].x = 0;
-	else if(snake[0].x<0) snake[0].x = 784/16;
-	if (snake[0].y>=640/16) snake[0].y = 0;
-	else if (snake[0].y<0) snake[0].y = 624/16;
+	if (snake[0].x>=640/16) snake[0].x = 0;
+	else if(snake[0].x<0) snake[0].x = 624/16;
+
+	if (snake[0].y>=480/16) snake[0].y = 0;
+	else if (snake[0].y<0) snake[0].y = 464/16;
 
 }
 
@@ -171,8 +183,8 @@ void snakeOnGoing()
 		{
 			if (is_rand == 1)
 			{
-				specialX = rand() % 800 / 16;
-				specialY = rand() % 640 / 16;
+				specialX = rand() % 640 / 16;
+				specialY = rand() % 480 / 16;
 				int sigur = 1;
 				do
 				{
@@ -182,55 +194,66 @@ void snakeOnGoing()
 							sigur = 0;
 					if (specialX == food.x && specialY == food.y)
 						sigur = 0;
-					if (specialX >= (800 / 16) - 1 || specialX <= 1 || specialY <= 1 || specialY >= (640 / 16) - 1)
+					if (specialX >= (640 / 16) - 1 || specialX <= 1 || specialY <= 1 || specialY >= (480 / 16) - 1)
 						sigur = 0;
 					if (sigur == 0)
 					{
-						specialX = rand() % 800 / 16;
-						specialY = rand() % 640 / 16;
+						specialX = rand() % 640 / 16;
+						specialY = rand() % 480 / 16;
 					}
 				} while (sigur == 0);
 				r = rand() % 3 + 1;
 				is_rand = 0;
 			}
-		aparut = 1;
-		if (este_mancat == 1 && nr_mutari <= 40)
-		{
-			if (r == 1)
+			aparut = 1;
+			if (este_mancat == 1 && nr_mutari <= 30)
 			{
-				star.x = specialX;
-				star.y = specialY;
-				stea.setPosition(star.x * 16, star.y * 16);
-				window.draw(stea);
-			}
-			else if (r == 2)
-			{
-				slow.x = specialX;
-				slow.y = specialY;
-				incetinire.setPosition(slow.x * 16, slow.y * 16);
-				window.draw(incetinire);
+				if (r == 1)
+				{
+					star.x = specialX;
+					star.y = specialY;
+					stea.setPosition(star.x * 16, star.y * 16);
+					window.draw(stea);
+				}
+				else if (r == 2)
+				{
+					slow.x = specialX;
+					slow.y = specialY;
+					incetinire.setPosition(slow.x * 16, slow.y * 16);
+					window.draw(incetinire);
+				}
+				else
+				{
+					cut.x = specialX;
+					cut.y = specialY;
+					scurtare.setPosition(cut.x * 16, cut.y * 16);
+					window.draw(scurtare);
+				}
 			}
 			else
 			{
-				less.x = specialX;
-				less.y = specialY;
-				scurtare.setPosition(less.x * 16, less.y * 16);
-				window.draw(scurtare);
+				is_rand = 1;
+				este_mancat = 0;
+				cut.x = -2;
+				cut.y = cut.x;
+				star.x = cut.x;
+				star.y = cut.x;
+				slow.x = cut.x;
+				slow.y = cut.x;
+				window.clear();
 			}
 		}
-		else
-		{
-			is_rand = 1;
-			este_mancat = 0;
-			less.x = -2;
-			less.y = less.x;
-			star.x = less.x;
-			star.y = less.x;
-			slow.x = less.x;
-			slow.y = less.x;
-			window.clear();
-		}
-	}
+
+		for (int i = 0; i < 30; i++)
+			for (int j = 0; j < 40; j++)
+			{
+				if (labirint[i][j] == 1)
+				{
+					sarpe.setPosition(j * 16, i * 16);
+					window.draw(sarpe);
+				}
+			}
+
 		for (int index = 0; index < lungime; index++)
 		{
 			sarpe.setPosition(snake[index].x * 16, snake[index].y * 16);
@@ -242,8 +265,91 @@ void snakeOnGoing()
 	}
 }
 
+//initializare labirinturi
+
 void initLabirint0()
 {
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+			labirint[i][j] = 0;
+	lungime = 4;
+	lungime_init = lungime;
+	snakeOnGoing();
+}
+
+void initLabirint1()
+{
+	
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin1 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snakeOnGoing();
+}
+
+void initLabirint2()
+{
+
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin2 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snakeOnGoing();
+}
+
+void initLabirint3()
+{
+
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin3 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snakeOnGoing();
+}
+
+void initLabirint4()
+{
+
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin4 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snakeOnGoing();
+}
+
+void initLabirint5()
+{
+
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin5 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snakeOnGoing();
+}
+
+void initLabirint6()
+{
+
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin6 >> labirint[i][j];
+		}
 	lungime = 4;
 	lungime_init = lungime;
 	snakeOnGoing();
@@ -252,6 +358,6 @@ void initLabirint0()
 int main()
 {
 	while (window.isOpen())
-		initLabirint0();
+		initLabirint2();
 	return 0;
 }
