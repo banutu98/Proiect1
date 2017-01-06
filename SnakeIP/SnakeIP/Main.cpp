@@ -48,7 +48,7 @@ struct Multiplier
 {
 	int x = -2, y = -2;
 }multiplier;
-int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0;
+int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0;
 float delay = 0.3;
 int labirint[30][40];
 int Scor = 0;
@@ -69,6 +69,7 @@ void miscareSarpe()
 		snake[0].x += 1;
 	if (directie == 3)
 		snake[0].y -= 1;
+	directie_aleasa = 0;
 
 	//fruct
 	if (snake[0].x == food.x && snake[0].y == food.y)
@@ -156,11 +157,11 @@ void miscareSarpe()
 	}
 
 	//trecerea prin pereti
-	if (snake[0].x>=640/16) snake[0].x = 0;
-	else if(snake[0].x<0) snake[0].x = 624/16;
+	if (snake[0].x >= 640/16) snake[0].x = 0;
+	else if(snake[0].x < 0) snake[0].x = 624/16;
 
-	if (snake[0].y>=480/16) snake[0].y = 0;
-	else if (snake[0].y<0) snake[0].y = 464/16;
+	if (snake[0].y >= 480/16) snake[0].y = 0;
+	else if (snake[0].y < 0) snake[0].y = 464/16;
 
 }
 
@@ -173,20 +174,153 @@ bool coliziune()
 			return true;
 	return false;
 }
-void snakeOnGoing()
+
+void powerUp()
+{
+	t3.loadFromFile("star.png");
+	t4.loadFromFile("clock.png");
+	t5.loadFromFile("minus2.png");
+	t7.loadFromFile("2x.png");
+	Sprite stea(t3), incetinire(t4), scurtare(t5), dublare(t7);
+
+	if (nr_mancate % 6 == 0)
+		counter = nr_mancate;
+	if (counter % 6 == 0 && counter != 0 && este_mancat == 1)
+	{
+		if (is_rand == 1)
+		{
+			specialX = rand() % 640 / 16;
+			specialY = rand() % 480 / 16;
+			int sigur = 1;
+			do
+			{
+				sigur = 1;
+				for (int index = 0; index < lungime; index++)
+					if (snake[index].x == specialX && snake[index].y == specialY)
+						sigur = 0;
+				if (specialX == food.x && specialY == food.y)
+					sigur = 0;
+				if (specialX >= (640 / 16) - 1 || specialX <= 1 || specialY <= 1 || specialY >= (480 / 16) - 1)
+					sigur = 0;
+				if (labirint[specialX][specialY] == 1)
+					sigur = 0;
+				if (sigur == 0)
+				{
+					specialX = rand() % 640 / 16;
+					specialY = rand() % 480 / 16;
+				}
+			} while (sigur == 0);
+			r = rand() % 4 + 1;
+			is_rand = 0;
+		}
+		aparut = 1;
+		if (este_mancat == 1 && nr_mutari <= 30)
+		{
+			if (r == 1)
+			{
+				star.x = specialX;
+				star.y = specialY;
+				stea.setPosition(star.x * 16, star.y * 16);
+				window.draw(stea);
+			}
+			else if (r == 2)
+			{
+				slow.x = specialX;
+				slow.y = specialY;
+				incetinire.setPosition(slow.x * 16, slow.y * 16);
+				window.draw(incetinire);
+			}
+			else if (r == 3)
+			{
+				cut.x = specialX;
+				cut.y = specialY;
+				scurtare.setPosition(cut.x * 16, cut.y * 16);
+				window.draw(scurtare);
+			}
+			else
+			{
+				multiplier.x = specialX;
+				multiplier.y = specialY;
+				dublare.setPosition(multiplier.x * 16, multiplier.y * 16);
+				window.draw(dublare);
+			}
+		}
+		else
+		{
+			is_rand = 1;
+			este_mancat = 0;
+			cut.x = -2;
+			cut.y = cut.x;
+			star.x = cut.x;
+			star.y = cut.x;
+			slow.x = cut.x;
+			slow.y = cut.x;
+			window.clear();
+		}
+	}
+}
+
+void desenareElemente()
+{
+	t1.loadFromFile("green.png");
+	t2.loadFromFile("food.png");
+	t6.loadFromFile("wall.png");
+	Sprite sarpe(t1), mancare(t2), zid(t6);
+
+	for (int index = 0; index < lungime; index++)
+	{
+		sarpe.setPosition(snake[index].x * 16, snake[index].y * 16);
+		window.draw(sarpe);
+	}
+
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			if (labirint[i][j] == 1)
+			{
+				zid.setPosition(j * 16, i * 16);
+				window.draw(zid);
+			}
+		}
+
+	
+	mancare.setPosition(food.x * 16, food.y * 16);
+	window.draw(mancare);
+}
+
+void directieSarpe()
+{
+
+	if (Keyboard::isKeyPressed(Keyboard::Left) && directie != 2 && directie_aleasa == 0)
+	{
+		directie = 1;
+		directie_aleasa = 1;
+	}
+	if (Keyboard::isKeyPressed(Keyboard::Right) && directie != 1 && directie_aleasa == 0)
+	{
+		directie = 2;
+		directie_aleasa = 1;
+	}
+	if (Keyboard::isKeyPressed(Keyboard::Up) && directie != 0 && directie_aleasa == 0)
+	{
+		directie = 3;
+		directie_aleasa = 1;
+	}
+	if (Keyboard::isKeyPressed(Keyboard::Down) && directie != 3 && directie_aleasa == 0)
+	{
+		directie = 0;
+		directie_aleasa = 1;
+	}
+}
+
+void snakeClassic()
 {
 	Clock clock;
 	srand(time(0));
 	window.setFramerateLimit(30);
-	t1.loadFromFile("green.png");
-	t2.loadFromFile("food.png");
-	t3.loadFromFile("star.png");
-	t4.loadFromFile("clock.png");
-	t5.loadFromFile("minus2.png");
-	t6.loadFromFile("wall.png");
-	t7.loadFromFile("2x.png");
-	Sprite sarpe(t1), mancare(t2), stea(t3), incetinire(t4), scurtare(t5), zid(t6), dublare(t7);
 
+	Scor = 0;
+	
 	while (window.isOpen())
 	{
 		float timp = clock.getElapsedTime().asSeconds();
@@ -199,119 +333,25 @@ void snakeOnGoing()
 				window.close();
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Left) && directie != 2)
-			directie = 1;
-		if (Keyboard::isKeyPressed(Keyboard::Right) && directie != 1)
-			directie = 2;
-		if (Keyboard::isKeyPressed(Keyboard::Up) && directie != 0)
-			directie = 3;
-		if (Keyboard::isKeyPressed(Keyboard::Down) && directie != 3)
-			directie = 0;
+		directieSarpe();
 
 		if (timer > delay)
 		{
 			timer = 0;
 			miscareSarpe();
 			if (coliziune() == true)
+			{
 				cout << "crash";
+			}
 			if (aparut == 1)
 				nr_mutari++;
 		}
 		window.clear();
 
-		if (nr_mancate % 6 == 0)
-			counter = nr_mancate;
-		if (counter % 6 == 0 && counter != 0 && este_mancat == 1)
-		{
-			if (is_rand == 1)
-			{
-				specialX = rand() % 640 / 16;
-				specialY = rand() % 480 / 16;
-				int sigur = 1;
-				do
-				{
-					sigur = 1;
-					for (int index = 0; index < lungime; index++)
-						if (snake[index].x == specialX && snake[index].y == specialY)
-							sigur = 0;
-					if (specialX == food.x && specialY == food.y)
-						sigur = 0;
-					if (specialX >= (640 / 16) - 1 || specialX <= 1 || specialY <= 1 || specialY >= (480 / 16) - 1)
-						sigur = 0;
-					if (labirint[specialX][specialY] == 1)
-						sigur = 0;
-					if (sigur == 0)
-					{
-						specialX = rand() % 640 / 16;
-						specialY = rand() % 480 / 16;
-					}
-				} while (sigur == 0);
-				r = rand() % 4 + 1;
-				is_rand = 0;
-			}
-			aparut = 1;
-			if (este_mancat == 1 && nr_mutari <= 30)
-			{
-				if (r == 1)
-				{
-					star.x = specialX;
-					star.y = specialY;
-					stea.setPosition(star.x * 16, star.y * 16);
-					window.draw(stea);
-				}
-				else if (r == 2)
-				{
-					slow.x = specialX;
-					slow.y = specialY;
-					incetinire.setPosition(slow.x * 16, slow.y * 16);
-					window.draw(incetinire);
-				}
-				else if (r == 3)
-				{
-					cut.x = specialX;
-					cut.y = specialY;
-					scurtare.setPosition(cut.x * 16, cut.y * 16);
-					window.draw(scurtare);
-				}
-				else
-				{
-					multiplier.x = specialX;
-					multiplier.y = specialY;
-					dublare.setPosition(multiplier.x * 16, multiplier.y * 16);
-					window.draw(dublare);
-				}
-			}
-			else
-			{
-				is_rand = 1;
-				este_mancat = 0;
-				cut.x = -2;
-				cut.y = cut.x;
-				star.x = cut.x;
-				star.y = cut.x;
-				slow.x = cut.x;
-				slow.y = cut.x;
-				window.clear();
-			}
-		}
-
-		for (int i = 0; i < 30; i++)
-			for (int j = 0; j < 40; j++)
-			{
-				if (labirint[i][j] == 1)
-				{
-					zid.setPosition(j * 16, i * 16);
-					window.draw(zid);
-				}
-			}
-
-		for (int index = 0; index < lungime; index++)
-		{
-			sarpe.setPosition(snake[index].x * 16, snake[index].y * 16);
-			window.draw(sarpe);
-		}
-		mancare.setPosition(food.x * 16, food.y * 16);
-		window.draw(mancare);
+		powerUp();
+		
+		desenareElemente();
+		
 		window.display();
 	}
 }
@@ -326,7 +366,6 @@ void initLabirint0()
 	lungime = 4;
 	lungime_init = lungime;
 	Scor = 0;
-	snakeOnGoing();
 }
 
 void initLabirint1()
@@ -339,8 +378,6 @@ void initLabirint1()
 		}
 	lungime = 4;
 	lungime_init = lungime;
-	Scor = 0;
-	snakeOnGoing();
 }
 
 void initLabirint2()
@@ -353,8 +390,6 @@ void initLabirint2()
 		}
 	lungime = 4;
 	lungime_init = lungime;
-	Scor = 0;
-	snakeOnGoing();
 }
 
 void initLabirint3()
@@ -367,8 +402,6 @@ void initLabirint3()
 		}
 	lungime = 4;
 	lungime_init = lungime;
-	Scor = 0;
-	snakeOnGoing();
 }
 
 void initLabirint4()
@@ -381,8 +414,6 @@ void initLabirint4()
 		}
 	lungime = 4;
 	lungime_init = lungime;
-	Scor = 0;
-	snakeOnGoing();
 }
 
 void initLabirint5()
@@ -395,8 +426,6 @@ void initLabirint5()
 		}
 	lungime = 4;
 	lungime_init = lungime;
-	Scor = 0;
-	snakeOnGoing();
 }
 
 void initLabirint6()
@@ -409,13 +438,23 @@ void initLabirint6()
 		}
 	lungime = 4;
 	lungime_init = lungime;
-	Scor = 0;
-	snakeOnGoing();
+}
+
+//story mode
+
+void storyMode()
+{
+	int nr_nivel = 1;
+	nr_mancate = 0;
+	while (nr_mancate < nr_nivel * 10)
+	{
+		initLabirint0();
+	}
 }
 
 int main()
 {
-	while (window.isOpen())
-		initLabirint4();
+	initLabirint1();
+	snakeClassic();
 	return 0;
 }
