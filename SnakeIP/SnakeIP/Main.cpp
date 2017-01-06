@@ -40,6 +40,7 @@ struct Multiplier
 {
 	int x = -2, y = -2;
 }multiplier;
+
 int directie = 2, lungime, lungime_init, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0, nr_mancate, verif_lab;
 float delay = 0.3;
 int labirint[30][40];
@@ -325,6 +326,25 @@ void initLabirint0()
 	snake[3].x = -3;
 	snake[3].y = -3;
 	directie = 2;
+
+	int sigur = 1;
+	if (labirint[food.y][food.x] == 1)
+		do
+		{
+			sigur = 1;
+			for (int index = 0; index < lungime; index++)
+				if (snake[index].x == food.x && snake[index].y == food.y)
+					sigur = 0;
+			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
+				sigur = 0;
+			if (labirint[food.y][food.x] == 1)
+				sigur = 0;
+			if (sigur == 0)
+			{
+				food.x = rand() % 640 / 16;
+				food.y = rand() % 480 / 16;
+			}
+		} while (sigur == 0);
 }
 
 void initLabirint1()
@@ -348,6 +368,25 @@ void initLabirint1()
 	snake[3].y = -3;
 	directie = 2;
 	fin1.close();
+
+	int sigur = 1;
+	if (labirint[food.y][food.x] == 1)
+		do
+		{
+			sigur = 1;
+			for (int index = 0; index < lungime; index++)
+				if (snake[index].x == food.x && snake[index].y == food.y)
+					sigur = 0;
+			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
+				sigur = 0;
+			if (labirint[food.y][food.x] == 1)
+				sigur = 0;
+			if (sigur == 0)
+			{
+				food.x = rand() % 640 / 16;
+				food.y = rand() % 480 / 16;
+			}
+		} while (sigur == 0);
 }
 
 void initLabirint2()
@@ -371,6 +410,25 @@ void initLabirint2()
 	snake[3].y = -3;
 	directie = 2;
 	fin2.close();
+
+	int sigur = 1;
+	if (labirint[food.y][food.x] == 1)
+		do
+		{
+			sigur = 1;
+			for (int index = 0; index < lungime; index++)
+				if (snake[index].x == food.x && snake[index].y == food.y)
+					sigur = 0;
+			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
+				sigur = 0;
+			if (labirint[food.y][food.x] == 1)
+				sigur = 0;
+			if (sigur == 0)
+			{
+				food.x = rand() % 640 / 16;
+				food.y = rand() % 480 / 16;
+			}
+		} while (sigur == 0);
 }
 
 void initLabirint3()
@@ -394,6 +452,25 @@ void initLabirint3()
 	snake[3].y = -3;
 	directie = 2;
 	fin3.close();
+
+	int sigur = 1;
+	if (labirint[food.y][food.x] == 1)
+		do
+		{
+			sigur = 1;
+			for (int index = 0; index < lungime; index++)
+				if (snake[index].x == food.x && snake[index].y == food.y)
+					sigur = 0;
+			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
+				sigur = 0;
+			if (labirint[food.y][food.x] == 1)
+				sigur = 0;
+			if (sigur == 0)
+			{
+				food.x = rand() % 640 / 16;
+				food.y = rand() % 480 / 16;
+			}
+		} while (sigur == 0);
 }
 
 void initLabirint4()
@@ -417,6 +494,25 @@ void initLabirint4()
 	snake[3].y = -3;
 	directie = 2;
 	fin4.close();
+
+	int sigur = 1;
+	if (labirint[food.y][food.x] == 1)
+		do
+		{
+			sigur = 1;
+			for (int index = 0; index < lungime; index++)
+				if (snake[index].x == food.x && snake[index].y == food.y)
+					sigur = 0;
+			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
+				sigur = 0;
+			if (labirint[food.y][food.x] == 1)
+				sigur = 0;
+			if (sigur == 0)
+			{
+				food.x = rand() % 640 / 16;
+				food.y = rand() % 480 / 16;
+			}
+		} while (sigur == 0);
 }
 
 void initLabirint5()
@@ -440,6 +536,25 @@ void initLabirint5()
 	snake[3].y = -3;
 	directie = 2;
 	fin5.close();
+
+	int sigur = 1;
+	if (labirint[food.y][food.x] == 1)
+		do
+		{
+			sigur = 1;
+			for (int index = 0; index < lungime; index++)
+				if (snake[index].x == food.x && snake[index].y == food.y)
+					sigur = 0;
+			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
+				sigur = 0;
+			if (labirint[food.y][food.x] == 1)
+				sigur = 0;
+			if (sigur == 0)
+			{
+				food.x = rand() % 640 / 16;
+				food.y = rand() % 480 / 16;
+			}
+		} while (sigur == 0);
 }
 
 void initLabirint6()
@@ -463,16 +578,40 @@ void initLabirint6()
 	snake[3].y = -3;
 	directie = 2;
 	fin6.close();
+
+	int sigur = 1;
+	if (labirint[food.y][food.x] == 1)
+		do
+		{
+			sigur = 1;
+			for (int index = 0; index < lungime; index++)
+				if (snake[index].x == food.x && snake[index].y == food.y)
+					sigur = 0;
+			if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
+				sigur = 0;
+			if (labirint[food.y][food.x] == 1)
+				sigur = 0;
+			if (sigur == 0)
+			{
+				food.x = rand() % 640 / 16;
+				food.y = rand() % 480 / 16;
+			}
+		} while (sigur == 0);
 }
 
+void meniu();
+
+//moduri joc
 
 void snakeClassic()
 {
 	Clock clock;
 	srand(time(0));
 	window.setFramerateLimit(30);
+	initLabirint0();
 	nr_mancate = 0;
 	Scor = 0;
+	int selected_menu;
 	
 	while (window.isOpen())
 	{
@@ -484,6 +623,13 @@ void snakeClassic()
 		{
 			if (event.type == Event::Closed)
 				window.close();
+			
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Escape))
+		{
+			selected_menu = 1;
+			break;
 		}
 
 		directieSarpe();
@@ -507,6 +653,9 @@ void snakeClassic()
 		
 		window.display();
 	}
+
+	if (selected_menu == 1)
+		meniu();
 }
 
 void snakeCampaign()
@@ -517,6 +666,7 @@ void snakeCampaign()
 
 	Scor = 0;
 	int nr_nivel = 1, nr_labirint = 0;
+	int selected_menu;
 	nr_mancate = 0;
 	initLabirint0();
 
@@ -530,6 +680,12 @@ void snakeCampaign()
 		{
 			if (event.type == Event::Closed)
 				window.close();
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Escape))
+		{
+			selected_menu = 1;
+			break;
 		}
 
 		directieSarpe();
@@ -590,6 +746,129 @@ void snakeCampaign()
 		
 		window.display();
 	}
+
+	if (selected_menu == 1)
+		meniu();
+		
+}
+
+//meniu
+
+void meniu()
+{
+	window.clear();
+	int selectedIndex = 0;
+	Font font;
+	font.loadFromFile("arial.ttf");
+	Text text[6];
+
+	text[0].setFont(font);
+	text[0].setColor(Color::Red);
+	text[0].setString("Classic mode");
+	text[0].setPosition(100, 100);
+
+	text[1].setFont(font);
+	text[1].setColor(Color::White);
+	text[1].setString("Campaign mode");
+	text[1].setPosition(100, 150);
+
+	text[2].setFont(font);
+	text[2].setColor(Color::White);
+	text[2].setString("Versus mode");
+	text[2].setPosition(100, 200);
+
+	text[3].setFont(font);
+	text[3].setColor(Color::White);
+	text[3].setString("Scores");
+	text[3].setPosition(100, 250);
+
+	text[4].setFont(font);
+	text[4].setColor(Color::White);
+	text[4].setString("Exit");
+	text[4].setPosition(100, 300);
+
+	text[5].setFont(font);
+	text[5].setColor(Color::Magenta);
+	text[5].setString("Snake 5.0");
+	text[5].setPosition(250, 10);
+
+	while (window.isOpen())
+	{
+		for (int i = 0; i <= 5; i++)
+			window.draw(text[i]);
+		window.display();
+		window.clear();
+
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+
+			//meniu jos
+			if (Keyboard::isKeyPressed(Keyboard::Down))
+			{
+				if (selectedIndex < 4)
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex++;
+					text[selectedIndex].setColor(Color::Red);
+				}
+				else
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex = 0;
+					text[selectedIndex].setColor(Color::Red);
+				}
+			}
+
+			//meniu sus
+			if (Keyboard::isKeyPressed(Keyboard::Up))
+			{
+				if (selectedIndex > 0)
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex--;
+					text[selectedIndex].setColor(Color::Red);
+				}
+				else
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex = 4;
+					text[selectedIndex].setColor(Color::Red);
+				}
+			}
+
+
+		}
+
+		//meniu select
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			break;
+		}
+	}
+
+	switch (selectedIndex)
+	{
+	case 0:
+		snakeClassic();
+		break;
+
+	case 1:
+		snakeCampaign();
+		break;
+
+	case 2:
+		break;
+
+	case 3:
+		break;
+
+	case 4:
+		window.close();
+		break;
+	}
 }
 
 
@@ -597,6 +876,7 @@ int main()
 {
 	//initLabirint6();
 	//snakeClassic();
-	snakeCampaign();
+	//snakeCampaign();
+	meniu();
 	return 0;
 }
