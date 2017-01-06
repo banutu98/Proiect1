@@ -5,16 +5,8 @@
 using namespace sf;
 using namespace std;
 
-//fisiere
-ifstream fin1("labirint1.txt");
-ifstream fin2("labirint2.txt");
-ifstream fin3("labirint3.txt");
-ifstream fin4("labirint4.txt");
-ifstream fin5("labirint5.txt");
-ifstream fin6("labirint6.txt");
-
 //declarari
-RenderWindow window(VideoMode(640, 480), "Snake v4.2");
+RenderWindow window(VideoMode(640, 480), "Snake v5.0");
 Texture t1, t2, t3, t4, t5, t6, t7;
 float timer = 0;
 int aparut = 0;
@@ -48,7 +40,7 @@ struct Multiplier
 {
 	int x = -2, y = -2;
 }multiplier;
-int directie = 2, lungime, lungime_init, nr_mancate = 0, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0;
+int directie = 2, lungime, lungime_init, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0, nr_mancate, verif_lab;
 float delay = 0.3;
 int labirint[30][40];
 int Scor = 0;
@@ -74,6 +66,7 @@ void miscareSarpe()
 	//fruct
 	if (snake[0].x == food.x && snake[0].y == food.y)
 	{
+		verif_lab = 1;
 		lungime++;
 		food.x = rand() % 640/16;
 		food.y = rand() % 480/16;
@@ -313,12 +306,172 @@ void directieSarpe()
 	}
 }
 
+//initializare labirinturi
+
+void initLabirint0()
+{
+	window.clear();
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+			labirint[i][j] = 0;
+	lungime = 4;
+	lungime_init = lungime;
+	snake[0].x = 640 / 32;
+	snake[0].y = 480 / 32;
+	snake[1].x = -3;
+	snake[1].y = -3;
+	snake[2].x = -3;
+	snake[2].y = -3;
+	snake[3].x = -3;
+	snake[3].y = -3;
+	directie = 2;
+}
+
+void initLabirint1()
+{
+	window.clear();
+	ifstream fin1("labirint1.txt");
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin1 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snake[0].x = 640 / 32;
+	snake[0].y = 480 / 32;
+	snake[1].x = -3;
+	snake[1].y = -3;
+	snake[2].x = -3;
+	snake[2].y = -3;
+	snake[3].x = -3;
+	snake[3].y = -3;
+	directie = 2;
+	fin1.close();
+}
+
+void initLabirint2()
+{
+	window.clear();
+	ifstream fin2("labirint2.txt");
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin2 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snake[0].x = 640 / 32;
+	snake[0].y = 480 / 32;
+	snake[1].x = -3;
+	snake[1].y = -3;
+	snake[2].x = -3;
+	snake[2].y = -3;
+	snake[3].x = -3;
+	snake[3].y = -3;
+	directie = 2;
+	fin2.close();
+}
+
+void initLabirint3()
+{
+	window.clear();
+	ifstream fin3("labirint3.txt");
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin3 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snake[0].x = 640 / 32;
+	snake[0].y = 480 / 32;
+	snake[1].x = -3;
+	snake[1].y = -3;
+	snake[2].x = -3;
+	snake[2].y = -3;
+	snake[3].x = -3;
+	snake[3].y = -3;
+	directie = 2;
+	fin3.close();
+}
+
+void initLabirint4()
+{
+	window.clear();
+	ifstream fin4("labirint4.txt");
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin4 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snake[0].x = 640 / 32;
+	snake[0].y = 480 / 32;
+	snake[1].x = -3;
+	snake[1].y = -3;
+	snake[2].x = -3;
+	snake[2].y = -3;
+	snake[3].x = -3;
+	snake[3].y = -3;
+	directie = 2;
+	fin4.close();
+}
+
+void initLabirint5()
+{
+	window.clear();
+	ifstream fin5("labirint5.txt");
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin5 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snake[0].x = 640 / 32;
+	snake[0].y = 480 / 32;
+	snake[1].x = -3;
+	snake[1].y = -3;
+	snake[2].x = -3;
+	snake[2].y = -3;
+	snake[3].x = -3;
+	snake[3].y = -3;
+	directie = 2;
+	fin5.close();
+}
+
+void initLabirint6()
+{
+	window.clear();
+	ifstream fin6("labirint6.txt");
+	for (int i = 0; i < 30; i++)
+		for (int j = 0; j < 40; j++)
+		{
+			fin6 >> labirint[i][j];
+		}
+	lungime = 4;
+	lungime_init = lungime;
+	snake[0].x = 640 / 32;
+	snake[0].y = 480 / 32;
+	snake[1].x = -3;
+	snake[1].y = -3;
+	snake[2].x = -3;
+	snake[2].y = -3;
+	snake[3].x = -3;
+	snake[3].y = -3;
+	directie = 2;
+	fin6.close();
+}
+
+
 void snakeClassic()
 {
 	Clock clock;
 	srand(time(0));
 	window.setFramerateLimit(30);
-
+	nr_mancate = 0;
 	Scor = 0;
 	
 	while (window.isOpen())
@@ -356,105 +509,94 @@ void snakeClassic()
 	}
 }
 
-//initializare labirinturi
-
-void initLabirint0()
+void snakeCampaign()
 {
-	for (int i = 0; i < 30; i++)
-		for (int j = 0; j < 40; j++)
-			labirint[i][j] = 0;
-	lungime = 4;
-	lungime_init = lungime;
+	Clock clock;
+	srand(time(0));
+	window.setFramerateLimit(30);
+
 	Scor = 0;
-}
-
-void initLabirint1()
-{
-	
-	for (int i = 0; i < 30; i++)
-		for (int j = 0; j < 40; j++)
-		{
-			fin1 >> labirint[i][j];
-		}
-	lungime = 4;
-	lungime_init = lungime;
-}
-
-void initLabirint2()
-{
-
-	for (int i = 0; i < 30; i++)
-		for (int j = 0; j < 40; j++)
-		{
-			fin2 >> labirint[i][j];
-		}
-	lungime = 4;
-	lungime_init = lungime;
-}
-
-void initLabirint3()
-{
-
-	for (int i = 0; i < 30; i++)
-		for (int j = 0; j < 40; j++)
-		{
-			fin3 >> labirint[i][j];
-		}
-	lungime = 4;
-	lungime_init = lungime;
-}
-
-void initLabirint4()
-{
-
-	for (int i = 0; i < 30; i++)
-		for (int j = 0; j < 40; j++)
-		{
-			fin4 >> labirint[i][j];
-		}
-	lungime = 4;
-	lungime_init = lungime;
-}
-
-void initLabirint5()
-{
-
-	for (int i = 0; i < 30; i++)
-		for (int j = 0; j < 40; j++)
-		{
-			fin5 >> labirint[i][j];
-		}
-	lungime = 4;
-	lungime_init = lungime;
-}
-
-void initLabirint6()
-{
-
-	for (int i = 0; i < 30; i++)
-		for (int j = 0; j < 40; j++)
-		{
-			fin6 >> labirint[i][j];
-		}
-	lungime = 4;
-	lungime_init = lungime;
-}
-
-//story mode
-
-void storyMode()
-{
-	int nr_nivel = 1;
+	int nr_nivel = 1, nr_labirint = 0;
 	nr_mancate = 0;
-	while (nr_mancate < nr_nivel * 10)
+	initLabirint0();
+
+	while (window.isOpen())
 	{
-		initLabirint0();
+		float timp = clock.getElapsedTime().asSeconds();
+		clock.restart();
+		timer += timp;
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+		}
+
+		directieSarpe();
+
+		if (nr_mancate > 0 && nr_mancate % (5 * nr_nivel) == 0 && verif_lab == 1)
+		{
+			nr_labirint++;
+
+			if (nr_labirint == 7)
+				nr_labirint = 0;
+
+			if (nr_labirint == 6)
+				nr_nivel++;
+
+			verif_lab = 0;
+
+			switch (nr_labirint)
+			{
+				case 0: initLabirint0();
+						break;
+
+				case 1: initLabirint1();
+						break;
+
+				case 2: initLabirint2();
+						break;
+
+				case 3: initLabirint3();
+						break;
+
+				case 4: initLabirint4();
+						break;
+
+				case 5: initLabirint5();
+						break;
+
+				case 6: initLabirint6();
+						break;
+			}
+		}
+
+		if (timer > delay)
+		{
+			timer = 0;
+			miscareSarpe();
+			if (coliziune() == true)
+			{
+				cout << "crash";
+			}
+			if (aparut == 1)
+				nr_mutari++;
+		}
+		window.clear();
+
+		powerUp();
+
+		desenareElemente();
+		
+		window.display();
 	}
 }
 
+
 int main()
 {
-	initLabirint1();
-	snakeClassic();
+	//initLabirint6();
+	//snakeClassic();
+	snakeCampaign();
 	return 0;
 }
