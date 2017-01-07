@@ -8,7 +8,7 @@ using namespace std;
 
 //declarari
 RenderWindow window(VideoMode(640, 512), "Snake v5.0");
-Texture t1, t2, t3, t4, t5, t6, t7;
+Texture t1, t2, t3, t4, t5, t6, t7, t8;
 float timer = 0;
 int aparut = 0;
 
@@ -45,7 +45,7 @@ struct Multiplier
 int directie = 2, lungime, lungime_init, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0, nr_mancate, verif_lab;
 float delay = 0.3;
 int labirint[30][40];
-int Scor = 0;
+int Scor = 0, scoruri_n[11];
 
 void miscareSarpe()
 {
@@ -260,13 +260,8 @@ void desenareElemente()
 	t1.loadFromFile("green.png");
 	t2.loadFromFile("food.png");
 	t6.loadFromFile("wall.png");
-	Sprite sarpe(t1), mancare(t2), zid(t6);
-
-	for (int index = 0; index < lungime; index++)
-	{
-		sarpe.setPosition(snake[index].x * 16, snake[index].y * 16);
-		window.draw(sarpe);
-	}
+	t8.loadFromFile("sand.png");
+	Sprite sarpe(t1), mancare(t2), zid(t6), nisip(t8);
 
 	for (int i = 0; i < 30; i++)
 		for (int j = 0; j < 40; j++)
@@ -276,8 +271,18 @@ void desenareElemente()
 				zid.setPosition(j * 16, i * 16);
 				window.draw(zid);
 			}
+			else
+			{
+				nisip.setPosition(j * 16, i * 16);
+				window.draw(nisip);
+			}
 		}
 
+	for (int index = 0; index < lungime; index++)
+	{
+		sarpe.setPosition(snake[index].x * 16, snake[index].y * 16);
+		window.draw(sarpe);
+	}
 	
 	mancare.setPosition(food.x * 16, food.y * 16);
 	window.draw(mancare);
@@ -614,7 +619,16 @@ void snakeClassic()
 	nr_mancate = 0;
 	Scor = 0;
 	int selected_menu = 0;
-	
+	char scor_char[4];
+	Font font;
+	font.loadFromFile("arial.ttf");
+	Text text[3];
+	text[1].setColor(Color::White);
+	text[1].setString("Classic Mode");
+	text[1].setPosition(200, 480);
+	text[1].setFont(font);
+	text[1].setCharacterSize(25);
+
 	while (window.isOpen())
 	{
 		float timp = clock.getElapsedTime().asSeconds();
@@ -642,13 +656,47 @@ void snakeClassic()
 			miscareSarpe();
 			if (coliziune() == true)
 			{
-				cout << "crash";
+				if (coliziune() == true)
+				{
+					int scor_curent;
+					ifstream fin("scores.txt");
+					for (int i = 0; i < 10; i++)
+					{
+						fin >> scor_curent;
+						scoruri_n[i] = scor_curent;
+					}
+					fin.clear();
+					fin.close();
+					ofstream fout("scores.txt");
+					for (int i = 0; i < 10; i++)
+						if (Scor >= scoruri_n[i])
+						{
+							for (int j = 9; j > i; j--)
+								scoruri_n[j] = scoruri_n[j - 1];
+							scoruri_n[i] = Scor;
+							break;
+						}
+					for (int i = 0; i < 10; i++)
+						fout << scoruri_n[i] << " ";
+					fout.close();
+					scoruri();
+				}
 			}
 			if (aparut == 1)
 				nr_mutari++;
 		}
 		window.clear();
 
+		_itoa_s(Scor, scor_char, 10);
+		
+		text[0].setColor(Color::White);
+		text[0].setFont(font);
+		text[0].setPosition(10, 480);
+		text[0].setString(scor_char);
+		text[0].setCharacterSize(25);
+
+		for (int i = 0; i <= 1; i++)
+			window.draw(text[i]);
 		powerUp();
 		
 		desenareElemente();
@@ -702,8 +750,8 @@ void snakeCampaign()
 		}
 
 		directieSarpe();
-		//toNextLv = 2 * nr_nivel - nr_mancate % (2 * nr_nivel);
-		if (nr_mancate > 0 && nr_mancate % (2 * nr_nivel) == 0 && verif_lab == 1)
+		
+		if (nr_mancate > 0 && nr_mancate % (9 * nr_nivel) == 0 && verif_lab == 1)
 		{
 			nr_labirint++;
 
@@ -755,7 +803,28 @@ void snakeCampaign()
 			miscareSarpe();
 			if (coliziune() == true)
 			{
-				cout << "crash";
+				int scor_curent;
+				ifstream fin("scores.txt");
+				for (int i = 0; i < 10; i++)
+				{
+					fin >> scor_curent;
+					scoruri_n[i] = scor_curent;
+				}
+				fin.clear();
+				fin.close();
+				ofstream fout("scores.txt");
+				for (int i = 0; i < 10; i++)
+					if (Scor >= scoruri_n[i])
+					{
+						for (int j = 9; j > i; j--)
+							scoruri_n[j] = scoruri_n[j - 1];
+						scoruri_n[i] = Scor;
+						break;
+					}
+				for (int i = 0; i < 10; i++)
+					fout << scoruri_n[i] << " ";
+				fout.close();
+				scoruri();
 			}
 			if (aparut == 1)
 				nr_mutari++;
@@ -770,7 +839,7 @@ void snakeCampaign()
 		text[0].setCharacterSize(25);
 
 		
-		_itoa_s(2 * nr_nivel - nr_mancate, remained_char, 10);
+		_itoa_s(9 * nr_nivel - nr_mancate, remained_char, 10);
 
 		text[2].setColor(Color::White);
 		text[2].setFont(font);
