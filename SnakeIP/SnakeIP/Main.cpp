@@ -605,8 +605,11 @@ void initLabirint6()
 		} while (sigur == 0);
 }
 
+//declarari subprograme
+
 void meniu();
-void submeniu();
+void submeniu_classic();
+void submeniu_versus();
 void scoruri();
 
 //moduri joc
@@ -697,15 +700,16 @@ void snakeClassic()
 
 		for (int i = 0; i <= 1; i++)
 			window.draw(text[i]);
-		powerUp();
-		
+
 		desenareElemente();
+
+		powerUp();
 		
 		window.display();
 	}
 
 	if (selected_menu == 1)
-		submeniu();
+		submeniu_classic();
 }
 
 void snakeCampaign()
@@ -850,9 +854,9 @@ void snakeCampaign()
 		for (int i = 0; i <= 2; i++)
 			window.draw(text[i]);
 
-		powerUp();
-
 		desenareElemente();
+
+		powerUp();
 		
 		window.display();
 	}
@@ -860,6 +864,11 @@ void snakeCampaign()
 	if (selected_menu == 1)
 		meniu();
 		
+}
+
+void snakeVersus()
+{
+
 }
 
 //meniu
@@ -965,7 +974,7 @@ void meniu()
 	switch (selectedIndex)
 	{
 		case 0:
-			submeniu();
+			submeniu_classic();
 			break;
 
 		case 1:
@@ -973,6 +982,7 @@ void meniu()
 			break;
 
 		case 2:
+			submeniu_versus();
 			break;
 
 		case 3:
@@ -987,7 +997,7 @@ void meniu()
 
 //submeniu mod clasic
 
-void submeniu()
+void submeniu_classic()
 {
 	window.clear();
 	int selectedIndex = 1;
@@ -1140,6 +1150,167 @@ void submeniu()
 				initLabirint6();
 				snakeClassic();
 				break;
+		}
+	}
+	else if (selected_menu == 2)
+		meniu();
+}
+
+//submeniu mod versus
+
+void submeniu_versus()
+{
+	window.clear();
+	int selectedIndex = 1;
+	Font font;
+	font.loadFromFile("arial.ttf");
+	Text text[8];
+
+	text[0].setFont(font);
+	text[0].setColor(Color::Magenta);
+	text[0].setString("Select a map");
+	text[0].setPosition(250, 10);
+
+	text[1].setFont(font);
+	text[1].setColor(Color::Red);
+	text[1].setString("Map 0");
+	text[1].setPosition(100, 50);
+
+	text[2].setFont(font);
+	text[2].setColor(Color::White);
+	text[2].setString("Map 1");
+	text[2].setPosition(100, 110);
+
+	text[3].setFont(font);
+	text[3].setColor(Color::White);
+	text[3].setString("Map 2");
+	text[3].setPosition(100, 170);
+
+	text[4].setFont(font);
+	text[4].setColor(Color::White);
+	text[4].setString("Map 3");
+	text[4].setPosition(100, 230);
+
+	text[5].setFont(font);
+	text[5].setColor(Color::White);
+	text[5].setString("Map 4");
+	text[5].setPosition(100, 290);
+
+	text[6].setFont(font);
+	text[6].setColor(Color::White);
+	text[6].setString("Map 5");
+	text[6].setPosition(100, 350);
+
+	text[7].setFont(font);
+	text[7].setColor(Color::White);
+	text[7].setString("Map 6");
+	text[7].setPosition(100, 410);
+
+	int selected_menu = 0;
+
+	while (window.isOpen())
+	{
+		for (int i = 0; i <= 7; i++)
+			window.draw(text[i]);
+		window.display();
+		window.clear();
+
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+
+			//meniu jos
+			if (Keyboard::isKeyPressed(Keyboard::Down))
+			{
+				if (selectedIndex < 7)
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex++;
+					text[selectedIndex].setColor(Color::Red);
+				}
+				else
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex = 1;
+					text[selectedIndex].setColor(Color::Red);
+				}
+			}
+
+			//meniu sus
+			if (Keyboard::isKeyPressed(Keyboard::Up))
+			{
+				if (selectedIndex > 1)
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex--;
+					text[selectedIndex].setColor(Color::Red);
+				}
+				else
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex = 7;
+					text[selectedIndex].setColor(Color::Red);
+				}
+			}
+
+
+		}
+
+		//meniu select
+
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			selected_menu = 1;
+			break;
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Escape))
+		{
+			selected_menu = 2;
+			break;
+		}
+	}
+
+	if (selected_menu == 1)
+	{
+		switch (selectedIndex)
+		{
+		case 1:
+			initLabirint0();
+			snakeVersus();
+			break;
+
+		case 2:
+			initLabirint1();
+			snakeVersus();
+			break;
+
+		case 3:
+			initLabirint2();
+			snakeVersus();
+			break;
+
+		case 4:
+			initLabirint3();
+			snakeVersus();
+			break;
+
+		case 5:
+			initLabirint4();
+			snakeVersus();
+			break;
+
+		case 6:
+			initLabirint5();
+			snakeVersus();
+			break;
+
+		case 7:
+			initLabirint6();
+			snakeVersus();
+			break;
 		}
 	}
 	else if (selected_menu == 2)
