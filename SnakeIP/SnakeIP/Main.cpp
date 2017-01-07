@@ -669,7 +669,6 @@ void snakeCampaign()
 	Scor = 0;
 	int nr_nivel = 1, nr_labirint = 0;
 	int selected_menu;
-	int toNextLv;
 	nr_mancate = 0;
 	initLabirint0();
 
@@ -703,8 +702,7 @@ void snakeCampaign()
 		}
 
 		directieSarpe();
-		toNextLv = 2 * nr_nivel - nr_mancate % (2 * nr_nivel);
-
+		//toNextLv = 2 * nr_nivel - nr_mancate % (2 * nr_nivel);
 		if (nr_mancate > 0 && nr_mancate % (2 * nr_nivel) == 0 && verif_lab == 1)
 		{
 			nr_labirint++;
@@ -720,27 +718,36 @@ void snakeCampaign()
 			switch (nr_labirint)
 			{
 				case 0: initLabirint0();
+						nr_mancate = 0;
 						break;
 
 				case 1: initLabirint1();
+						nr_mancate = 0;
 						break;
 
 				case 2: initLabirint2();
+						nr_mancate = 0;
 						break;
 
 				case 3: initLabirint3();
+						nr_mancate = 0;
 						break;
 
 				case 4: initLabirint4();
+						nr_mancate = 0;
 						break;
 
 				case 5: initLabirint5();
+						nr_mancate = 0;
 						break;
 
 				case 6: initLabirint6();
+						nr_mancate = 0;
 						break;
 			}
 		}
+
+		
 
 		if (timer > delay)
 		{
@@ -762,9 +769,8 @@ void snakeCampaign()
 		text[0].setString(scor_char);
 		text[0].setCharacterSize(25);
 
-		int remained;
-		remained = toNextLv;
-		_itoa_s(remained, remained_char, 10);
+		
+		_itoa_s(2 * nr_nivel - nr_mancate, remained_char, 10);
 
 		text[2].setColor(Color::White);
 		text[2].setFont(font);
