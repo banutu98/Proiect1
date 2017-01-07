@@ -2,11 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include <stdio.h>
 using namespace sf;
 using namespace std;
 
 //declarari
-RenderWindow window(VideoMode(640, 480), "Snake v5.0");
+RenderWindow window(VideoMode(640, 512), "Snake v5.0");
 Texture t1, t2, t3, t4, t5, t6, t7;
 float timer = 0;
 int aparut = 0;
@@ -601,6 +602,7 @@ void initLabirint6()
 
 void meniu();
 void submeniu();
+void scoruri();
 
 //moduri joc
 
@@ -667,8 +669,20 @@ void snakeCampaign()
 	Scor = 0;
 	int nr_nivel = 1, nr_labirint = 0;
 	int selected_menu;
+	int toNextLv;
 	nr_mancate = 0;
 	initLabirint0();
+
+	Font font;
+	font.loadFromFile("arial.ttf");
+	Text text[3];
+	text[1].setColor(Color::White);
+	text[1].setString("Campaign Mode");
+	text[1].setPosition(200, 480);
+	text[1].setFont(font);
+	text[1].setCharacterSize(25);
+
+	char scor_char[10], remained_char[4];
 
 	while (window.isOpen())
 	{
@@ -689,16 +703,17 @@ void snakeCampaign()
 		}
 
 		directieSarpe();
+		toNextLv = 2 * nr_nivel - nr_mancate % (2 * nr_nivel);
 
-		if (nr_mancate > 0 && nr_mancate % (5 * nr_nivel) == 0 && verif_lab == 1)
+		if (nr_mancate > 0 && nr_mancate % (2 * nr_nivel) == 0 && verif_lab == 1)
 		{
 			nr_labirint++;
 
 			if (nr_labirint == 7)
+			{
 				nr_labirint = 0;
-
-			if (nr_labirint == 6)
 				nr_nivel++;
+			}
 
 			verif_lab = 0;
 
@@ -740,6 +755,26 @@ void snakeCampaign()
 		}
 		window.clear();
 
+		_itoa_s(Scor, scor_char, 10);
+		text[0].setColor(Color::White);
+		text[0].setFont(font);
+		text[0].setPosition(10, 480);
+		text[0].setString(scor_char);
+		text[0].setCharacterSize(25);
+
+		int remained;
+		remained = toNextLv;
+		_itoa_s(remained, remained_char, 10);
+
+		text[2].setColor(Color::White);
+		text[2].setFont(font);
+		text[2].setPosition(600, 480);
+		text[2].setString(remained_char);
+		text[2].setCharacterSize(25);
+
+		for (int i = 0; i <= 2; i++)
+			window.draw(text[i]);
+
 		powerUp();
 
 		desenareElemente();
@@ -779,7 +814,7 @@ void meniu()
 
 	text[3].setFont(font);
 	text[3].setColor(Color::White);
-	text[3].setString("Scores");
+	text[3].setString("High Scores");
 	text[3].setPosition(100, 250);
 
 	text[4].setFont(font);
@@ -866,6 +901,7 @@ void meniu()
 			break;
 
 		case 3:
+			scoruri();
 			break;
 
 		case 4:
@@ -1033,6 +1069,66 @@ void submeniu()
 	}
 	else if (selected_menu == 2)
 		meniu();
+}
+
+//scoruri
+
+void scoruri()
+{
+	window.clear();
+	Font font;
+	font.loadFromFile("arial.ttf");
+	Text scores[11];
+
+	ifstream fin_scor("scores.txt");
+	scores[0].setColor(Color::Magenta);
+	scores[0].setFont(font);
+	scores[0].setString("High Scores");
+	scores[0].setPosition(250, 10);
+
+	int scor;
+	char nr[33], scor_char[33];
+
+	for (int i = 1; i <= 10; i++)
+	{
+		fin_scor >> scor;
+		_itoa_s(i, nr, 10);
+		_itoa_s(scor, scor_char, 10);
+		strcat_s(nr, ". ");
+		strcat_s(nr, scor_char);
+		scores[i].setColor(Color::White);
+		scores[i].setFont(font);
+		scores[i].setCharacterSize(25);
+		scores[i].setString(nr);
+		scores[i].setPosition(100, 35*i + 40);
+	}
+
+	int selected_menu = 0;
+
+	while (window.isOpen())
+	{
+		for (int i = 0; i <= 10; i++)
+			window.draw(scores[i]);
+		window.display();
+		window.clear();
+
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Escape))
+		{
+			selected_menu = 1;
+			break;
+		}
+	}
+
+	if (selected_menu == 1)
+		meniu();
+	
 }
 
 
