@@ -17,6 +17,11 @@ struct Snake
 	int x = 640 / 32, y = 480 / 32;
 }snake[100];
 
+struct SnakeAI
+{
+	int x = 640 / 32, y = 464;
+}snakeAI[100];
+
 struct Food
 {
 	int x = 10, y = 8;
@@ -44,7 +49,7 @@ struct Multiplier
 
 int directie = 2, lungime, lungime_init, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0, nr_mancate, verif_lab;
 float delay = 0.3;
-int labirint[30][40];
+int labirint[30][40], labirintAI[30][40];
 int Scor = 0, scoruri_n[11];
 
 void miscareSarpe()
@@ -250,7 +255,7 @@ void powerUp()
 			star.y = cut.x;
 			slow.x = cut.x;
 			slow.y = cut.x;
-			window.clear();
+			
 		}
 	}
 }
@@ -622,7 +627,7 @@ void snakeClassic()
 	nr_mancate = 0;
 	Scor = 0;
 	int selected_menu = 0;
-	char scor_char[4];
+	char scor_char[10];
 	Font font;
 	font.loadFromFile("arial.ttf");
 	Text text[3];
@@ -878,38 +883,44 @@ void meniu()
 	window.clear();
 	int selectedIndex = 0;
 	Font font;
-	font.loadFromFile("arial.ttf");
+	font.loadFromFile("Beef'd.ttf");
 	Text text[6];
 
 	text[0].setFont(font);
 	text[0].setColor(Color::Red);
 	text[0].setString("Classic mode");
 	text[0].setPosition(100, 100);
+	text[0].setCharacterSize(20);
 
 	text[1].setFont(font);
 	text[1].setColor(Color::White);
 	text[1].setString("Campaign mode");
-	text[1].setPosition(100, 150);
+	text[1].setPosition(100, 160);
+	text[1].setCharacterSize(20);
 
 	text[2].setFont(font);
 	text[2].setColor(Color::White);
 	text[2].setString("Versus mode");
-	text[2].setPosition(100, 200);
+	text[2].setPosition(100, 220);
+	text[2].setCharacterSize(20);
 
 	text[3].setFont(font);
 	text[3].setColor(Color::White);
 	text[3].setString("High Scores");
-	text[3].setPosition(100, 250);
+	text[3].setPosition(100, 280);
+	text[3].setCharacterSize(20);
 
 	text[4].setFont(font);
 	text[4].setColor(Color::White);
 	text[4].setString("Exit");
-	text[4].setPosition(100, 300);
+	text[4].setPosition(100, 340);
+	text[4].setCharacterSize(20);
 
 	text[5].setFont(font);
 	text[5].setColor(Color::Magenta);
 	text[5].setString("Snake 5.0");
-	text[5].setPosition(250, 10);
+	text[5].setPosition(200, 10);
+	text[5].setCharacterSize(20);
 
 	int selected_menu;
 
@@ -1002,48 +1013,56 @@ void submeniu_classic()
 	window.clear();
 	int selectedIndex = 1;
 	Font font;
-	font.loadFromFile("arial.ttf");
+	font.loadFromFile("Beef'd.ttf");
 	Text text[8];
 
 	text[0].setFont(font);
 	text[0].setColor(Color::Magenta);
 	text[0].setString("Select a map");
-	text[0].setPosition(250, 10);
+	text[0].setPosition(180, 10);
+	text[0].setCharacterSize(20);
 
 	text[1].setFont(font);
 	text[1].setColor(Color::Red);
 	text[1].setString("Map 0");
-	text[1].setPosition(100, 50);
+	text[1].setPosition(100, 100);
+	text[1].setCharacterSize(20);
 
 	text[2].setFont(font);
 	text[2].setColor(Color::White);
 	text[2].setString("Map 1");
-	text[2].setPosition(100, 110);
+	text[2].setPosition(100, 150);
+	text[2].setCharacterSize(20);
 
 	text[3].setFont(font);
 	text[3].setColor(Color::White);
 	text[3].setString("Map 2");
-	text[3].setPosition(100, 170);
+	text[3].setPosition(100, 200);
+	text[3].setCharacterSize(20);
 
 	text[4].setFont(font);
 	text[4].setColor(Color::White);
 	text[4].setString("Map 3");
-	text[4].setPosition(100, 230);
+	text[4].setPosition(100, 250);
+	text[4].setCharacterSize(20);
 
 	text[5].setFont(font);
 	text[5].setColor(Color::White);
 	text[5].setString("Map 4");
-	text[5].setPosition(100, 290);
+	text[5].setPosition(100, 300);
+	text[5].setCharacterSize(20);
 
 	text[6].setFont(font);
 	text[6].setColor(Color::White);
 	text[6].setString("Map 5");
 	text[6].setPosition(100, 350);
+	text[6].setCharacterSize(20);
 
 	text[7].setFont(font);
 	text[7].setColor(Color::White);
 	text[7].setString("Map 6");
-	text[7].setPosition(100, 410);
+	text[7].setPosition(100, 400);
+	text[7].setCharacterSize(20);
 
 	int selected_menu = 0;
 
@@ -1163,48 +1182,56 @@ void submeniu_versus()
 	window.clear();
 	int selectedIndex = 1;
 	Font font;
-	font.loadFromFile("arial.ttf");
+	font.loadFromFile("Beef'd.ttf");
 	Text text[8];
 
 	text[0].setFont(font);
 	text[0].setColor(Color::Magenta);
 	text[0].setString("Select a map");
-	text[0].setPosition(250, 10);
+	text[0].setPosition(180, 10);
+	text[0].setCharacterSize(20);
 
 	text[1].setFont(font);
 	text[1].setColor(Color::Red);
 	text[1].setString("Map 0");
-	text[1].setPosition(100, 50);
+	text[1].setPosition(100, 100);
+	text[1].setCharacterSize(20);
 
 	text[2].setFont(font);
 	text[2].setColor(Color::White);
 	text[2].setString("Map 1");
-	text[2].setPosition(100, 110);
+	text[2].setPosition(100, 150);
+	text[2].setCharacterSize(20);
 
 	text[3].setFont(font);
 	text[3].setColor(Color::White);
 	text[3].setString("Map 2");
-	text[3].setPosition(100, 170);
+	text[3].setPosition(100, 200);
+	text[3].setCharacterSize(20);
 
 	text[4].setFont(font);
 	text[4].setColor(Color::White);
 	text[4].setString("Map 3");
-	text[4].setPosition(100, 230);
+	text[4].setPosition(100, 250);
+	text[4].setCharacterSize(20);
 
 	text[5].setFont(font);
 	text[5].setColor(Color::White);
 	text[5].setString("Map 4");
-	text[5].setPosition(100, 290);
+	text[5].setPosition(100, 300);
+	text[5].setCharacterSize(20);
 
 	text[6].setFont(font);
 	text[6].setColor(Color::White);
 	text[6].setString("Map 5");
 	text[6].setPosition(100, 350);
+	text[6].setCharacterSize(20);
 
 	text[7].setFont(font);
 	text[7].setColor(Color::White);
 	text[7].setString("Map 6");
-	text[7].setPosition(100, 410);
+	text[7].setPosition(100, 400);
+	text[7].setCharacterSize(20);
 
 	int selected_menu = 0;
 
@@ -1323,14 +1350,15 @@ void scoruri()
 {
 	window.clear();
 	Font font;
-	font.loadFromFile("arial.ttf");
+	font.loadFromFile("Beef'd.ttf");
 	Text scores[11];
 
 	ifstream fin_scor("scores.txt");
 	scores[0].setColor(Color::Magenta);
 	scores[0].setFont(font);
 	scores[0].setString("High Scores");
-	scores[0].setPosition(250, 10);
+	scores[0].setPosition(200, 10);
+	scores[0].setCharacterSize(20);
 
 	int scor;
 	char nr[33], scor_char[33];
@@ -1344,7 +1372,7 @@ void scoruri()
 		strcat_s(nr, scor_char);
 		scores[i].setColor(Color::White);
 		scores[i].setFont(font);
-		scores[i].setCharacterSize(25);
+		scores[i].setCharacterSize(20);
 		scores[i].setString(nr);
 		scores[i].setPosition(100, 35*i + 40);
 	}
