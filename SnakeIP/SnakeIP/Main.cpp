@@ -47,6 +47,12 @@ struct Multiplier
 	int x = -2, y = -2;
 }multiplier;
 
+struct Scor
+{
+	char nume[33], nr[33];
+	int numeric;
+}scores[10];
+
 int directie = 2, lungime, lungime_init, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0, nr_mancate, nr_mancate_AI, verif_lab;
 float delay = 0.3, delay_AI = 0.3;
 int labirint[30][40], labirintAI[30][40], directie_AI = 0;
@@ -768,7 +774,8 @@ void initLabirint6()
 void meniu();
 void submeniu_classic();
 void submeniu_versus();
-void scoruri();
+void submeniu_scor();
+void scoruri(int index);
 
 //moduri joc
 
@@ -819,28 +826,38 @@ void snakeClassic()
 			{
 				if (coliziune() == true)
 				{
-					int scor_curent;
-					ifstream fin("scores.txt");
+					char scor_curent[33];
+					ifstream fin("scores_classic.txt");
 					for (int i = 0; i < 10; i++)
 					{
 						fin >> scor_curent;
-						scoruri_n[i] = scor_curent;
+						scores[i].nume[0] = '\0';
+						strcat_s(scores[i].nume, scor_curent);
+
+						fin >> scor_curent;
+						scores[i].nr[0] = '\0';
+						strcat_s(scores[i].nr, scor_curent);
+						scores[i].numeric = stoi(scor_curent);
 					}
 					fin.clear();
 					fin.close();
-					ofstream fout("scores.txt");
+					ofstream fout("scores_classic.txt");
 					for (int i = 0; i < 10; i++)
-						if (Scor >= scoruri_n[i])
+						if (Scor >= scores[i].numeric)
 						{
 							for (int j = 9; j > i; j--)
-								scoruri_n[j] = scoruri_n[j - 1];
-							scoruri_n[i] = Scor;
+								scores[j] = scores[j - 1];
+							scores[i].numeric = Scor;
+							scores[i].nume[0] = '\0';
+							strcat_s(scores[i].nume, "scor_nou");
+							scores[i].nr[0] = '\0';
+							_itoa_s(Scor, scores[i].nr, 10);
 							break;
 						}
 					for (int i = 0; i < 10; i++)
-						fout << scoruri_n[i] << " ";
+						fout << scores[i].nume << " " << scores[i].nr << " ";
 					fout.close();
-					scoruri();
+					scoruri(1);
 				}
 			}
 			if (aparut == 1)
@@ -965,28 +982,38 @@ void snakeCampaign()
 			miscareSarpe();
 			if (coliziune() == true)
 			{
-				int scor_curent;
-				ifstream fin("scores.txt");
+				char scor_curent[33];
+				ifstream fin("scores_campaign.txt");
 				for (int i = 0; i < 10; i++)
 				{
 					fin >> scor_curent;
-					scoruri_n[i] = scor_curent;
+					scores[i].nume[0] = '\0';
+					strcat_s(scores[i].nume, scor_curent);
+
+					fin >> scor_curent;
+					scores[i].nr[0] = '\0';
+					strcat_s(scores[i].nr, scor_curent);
+					scores[i].numeric = stoi(scor_curent);
 				}
 				fin.clear();
 				fin.close();
-				ofstream fout("scores.txt");
+				ofstream fout("scores_campaign.txt");
 				for (int i = 0; i < 10; i++)
-					if (Scor >= scoruri_n[i])
+					if (Scor >= scores[i].numeric)
 					{
 						for (int j = 9; j > i; j--)
-							scoruri_n[j] = scoruri_n[j - 1];
-						scoruri_n[i] = Scor;
+							scores[j] = scores[j - 1];
+						scores[i].numeric = Scor;
+						scores[i].nume[0] = '\0';
+						strcat_s(scores[i].nume, "scor_nou");
+						scores[i].nr[0] = '\0';
+						_itoa_s(Scor, scores[i].nr, 10);
 						break;
 					}
 				for (int i = 0; i < 10; i++)
-					fout << scoruri_n[i] << " ";
+					fout << scores[i].nume << " " << scores[i].nr << " ";
 				fout.close();
-				scoruri();
+				scoruri(2);
 			}
 			if (aparut == 1)
 				nr_mutari++;
@@ -1125,28 +1152,38 @@ void snakeVersus()
 			miscareSarpe();
 			if (coliziune() == true || coliziune_cu_AI() == true)
 			{
-				int scor_curent;
-				ifstream fin("scores.txt");
+				char scor_curent[33];
+				ifstream fin("scores_versus.txt");
 				for (int i = 0; i < 10; i++)
 				{
 					fin >> scor_curent;
-					scoruri_n[i] = scor_curent;
+					scores[i].nume[0] = '\0';
+					strcat_s(scores[i].nume, scor_curent);
+
+					fin >> scor_curent;
+					scores[i].nr[0] = '\0';
+					strcat_s(scores[i].nr, scor_curent);
+					scores[i].numeric = stoi(scor_curent);
 				}
 				fin.clear();
 				fin.close();
-				ofstream fout("scores.txt");
+				ofstream fout("scores_versus.txt");
 				for (int i = 0; i < 10; i++)
-					if (Scor >= scoruri_n[i])
+					if (Scor >= scores[i].numeric)
 					{
 						for (int j = 9; j > i; j--)
-							scoruri_n[j] = scoruri_n[j - 1];
-						scoruri_n[i] = Scor;
+							scores[j] = scores[j - 1];
+						scores[i].numeric = Scor;
+						scores[i].nume[0] = '\0';
+						strcat_s(scores[i].nume, "scor_nou");
+						scores[i].nr[0] = '\0';
+						_itoa_s(Scor, scores[i].nr, 10);
 						break;
 					}
 				for (int i = 0; i < 10; i++)
-					fout << scoruri_n[i] << " ";
+					fout << scores[i].nume << " " << scores[i].nr << " ";
 				fout.close();
-				scoruri();
+				scoruri(3);
 			}
 			if (aparut == 1)
 				nr_mutari++;
@@ -1312,7 +1349,7 @@ void meniu()
 			break;
 
 		case 3:
-			scoruri();
+			submeniu_scor();
 			break;
 
 		case 4:
@@ -1659,37 +1696,186 @@ void submeniu_versus()
 		meniu();
 }
 
+//submeniu scoruri
+
+void submeniu_scor()
+{
+	window.clear();
+	int selectedIndex = 1;
+	Font font;
+	font.loadFromFile("Beef'd.ttf");
+	Text text[6];
+
+	text[0].setFont(font);
+	text[0].setColor(Color::Magenta);
+	text[0].setString("Select a mode");
+	text[0].setPosition(150, 50);
+	text[0].setCharacterSize(20);
+
+	text[1].setFont(font);
+	text[1].setColor(Color::Red);
+	text[1].setString("Classic");
+	text[1].setPosition(100, 160);
+	text[1].setCharacterSize(20);
+
+	text[2].setFont(font);
+	text[2].setColor(Color::White);
+	text[2].setString("Campaign");
+	text[2].setPosition(100, 220);
+	text[2].setCharacterSize(20);
+
+	text[3].setFont(font);
+	text[3].setColor(Color::White);
+	text[3].setString("Versus");
+	text[3].setPosition(100, 280);
+	text[3].setCharacterSize(20);
+
+	text[4].setFont(font);
+	text[4].setColor(Color::White);
+	text[4].setString("Reset scores");
+	text[4].setPosition(100, 400);
+	text[4].setCharacterSize(20);
+
+	int selected_menu;
+
+	while (window.isOpen())
+	{
+		for (int i = 0; i <= 4; i++)
+			window.draw(text[i]);
+		window.display();
+		window.clear();
+
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+
+			//meniu jos
+			if (Keyboard::isKeyPressed(Keyboard::Down))
+			{
+				if (selectedIndex < 4)
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex++;
+					text[selectedIndex].setColor(Color::Red);
+				}
+				else
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex = 1;
+					text[selectedIndex].setColor(Color::Red);
+				}
+			}
+
+			//meniu sus
+			if (Keyboard::isKeyPressed(Keyboard::Up))
+			{
+				if (selectedIndex > 1)
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex--;
+					text[selectedIndex].setColor(Color::Red);
+				}
+				else
+				{
+					text[selectedIndex].setColor(Color::White);
+					selectedIndex = 4;
+					text[selectedIndex].setColor(Color::Red);
+				}
+			}
+
+
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			selected_menu = 1;
+			break;
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Escape))
+		{
+			selected_menu = 2;
+			break;
+		}
+	}
+
+	if (selected_menu == 2)
+		meniu();
+	else if (selected_menu == 1)
+		scoruri(selectedIndex);
+}
+
 //scoruri
 
-void scoruri()
+void resetare_scoruri()
+{
+	ofstream fout1("scores_classic.txt");
+	ofstream fout2("scores_campaign.txt");
+	ofstream fout3("scores_versus.txt");
+
+	for (int i = 0; i <= 9; i++)
+	{
+		fout1 << "no_name " << "0 ";
+		fout2 << "no_name " << "0 ";
+		fout3 << "no_name " << "0 ";
+	}
+
+	fout1.close();
+	fout2.close();
+	fout3.close();
+}
+
+void scoruri(int index)
 {
 	window.clear();
 	Font font;
 	font.loadFromFile("Beef'd.ttf");
-	Text scores[11];
+	Text scores_text[11];
+	char nume_fisier[33];
+	nume_fisier[0] = '\0';
+	switch (index)
+	{
+		case 1:
+			strcat_s(nume_fisier, "scores_classic.txt");
+			break;
+		
+		case 2:
+			strcat_s(nume_fisier, "scores_campaign.txt");
+			break;
 
-	ifstream fin_scor("scores.txt");
-	scores[0].setColor(Color::Magenta);
-	scores[0].setFont(font);
-	scores[0].setString("High Scores");
-	scores[0].setPosition(200, 10);
-	scores[0].setCharacterSize(20);
+		case 3:
+			strcat_s(nume_fisier, "scores_versus.txt");
+			break;
 
-	int scor;
-	char nr[33], scor_char[33];
+		case 4:
+			resetare_scoruri();
+			break;
+	}
+
+	ifstream fin_scor(nume_fisier);
+
+	scores_text[0].setColor(Color::Magenta);
+	scores_text[0].setFont(font);
+	scores_text[0].setString("High Scores");
+	scores_text[0].setPosition(200, 10);
+	scores_text[0].setCharacterSize(20);
+
+	char scor_de_afisat[33];
 
 	for (int i = 1; i <= 10; i++)
 	{
-		fin_scor >> scor;
-		_itoa_s(i, nr, 10);
-		_itoa_s(scor, scor_char, 10);
-		strcat_s(nr, ". ");
-		strcat_s(nr, scor_char);
-		scores[i].setColor(Color::White);
-		scores[i].setFont(font);
-		scores[i].setCharacterSize(20);
-		scores[i].setString(nr);
-		scores[i].setPosition(100, 35*i + 40);
+		fin_scor >> scores[i-1].nume >> scores[i-1].nr;
+		scor_de_afisat[0] = '\0';
+		strcat_s(scor_de_afisat, scores[i-1].nume);
+		strcat_s(scor_de_afisat, " - ");
+		strcat_s(scor_de_afisat, scores[i-1].nr);
+		scores_text[i].setColor(Color::White);
+		scores_text[i].setFont(font);
+		scores_text[i].setCharacterSize(20);
+		scores_text[i].setString(scor_de_afisat);
+		scores_text[i].setPosition(100, 35*i + 40);
 	}
 
 	int selected_menu = 0;
@@ -1697,7 +1883,7 @@ void scoruri()
 	while (window.isOpen())
 	{
 		for (int i = 0; i <= 10; i++)
-			window.draw(scores[i]);
+			window.draw(scores_text[i]);
 		window.display();
 		window.clear();
 
@@ -1708,7 +1894,7 @@ void scoruri()
 				window.close();
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Escape))
+		if (Event::KeyReleased && event.key.code == Keyboard::Escape)
 		{
 			selected_menu = 1;
 			break;
@@ -1716,7 +1902,7 @@ void scoruri()
 	}
 
 	if (selected_menu == 1)
-		meniu();
+		submeniu_scor();
 	
 }
 

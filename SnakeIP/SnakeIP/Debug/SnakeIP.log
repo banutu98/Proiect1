@@ -1,22 +1,32 @@
-﻿  Main.cpp
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(51): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(113): warning C4305: '-=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(137): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(227): warning C4305: '-=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(251): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(359): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(366): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(373): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(380): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(412): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(417): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(424): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(428): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(439): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(778): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(876): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1085): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1240): warning C4101: 'selected_menu': unreferenced local variable
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1692): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  SnakeIP.vcxproj -> C:\Users\Serban\Desktop\Proiect1\SnakeIP\Debug\SnakeIP.exe
-  SnakeIP.vcxproj -> C:\Users\Serban\Desktop\Proiect1\SnakeIP\Debug\SnakeIP.pdb (Full PDB)
+﻿Build started 1/12/2017 8:42:42 PM.
+     1>Project "D:\Git\Proiect1\SnakeIP\SnakeIP\SnakeIP.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\Git\Proiect1\SnakeIP\packages\sfml-network.2.3.2.0\build\native\../..//build/native/include/" /I"D:\Git\Proiect1\SnakeIP\packages\sfml-audio.2.3.2.0\build\native\../..//build/native/include/" /I"D:\Git\Proiect1\SnakeIP\packages\sfml-graphics.2.3.2.0\build\native\../..//build/native/include/" /I"D:\Git\Proiect1\SnakeIP\packages\sfml-window.2.3.2.0\build\native\../..//build/native/include/" /I"D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/include/" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D HAS_SFML /D HAS_SFML /D HAS_SFML /D HAS_SFML /D HAS_SFML /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
+         Main.cpp
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(57): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(119): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(143): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(233): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(257): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(365): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(372): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(379): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(386): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(418): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(423): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(430): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(434): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(445): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(785): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(893): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(1112): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(1277): warning C4101: 'selected_menu' : unreferenced local variable
+     1>d:\git\proiect1\snakeip\snakeip\main.cpp(1878): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Git\Proiect1\SnakeIP\Debug\SnakeIP.exe" /INCREMENTAL /NOLOGO "D:\Git\Proiect1\SnakeIP\packages\sfml-network.2.3.2.0\build\native\../..//build/native/lib/Win32\v120\Debug\dynamic\sfml-network-d.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-audio.2.3.2.0\build\native\../..//build/native/lib/Win32\v120\Debug\dynamic\sfml-audio-d.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-graphics.2.3.2.0\build\native\../..//build/native/lib/Win32\v120\Debug\dynamic\sfml-graphics-d.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-window.2.3.2.0\build\native\../..//build/native/lib/Win32\v120\Debug\dynamic\sfml-window-d.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\vorbisfile.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\vorbisenc.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\vorbis.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\openal32.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\ogg.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\jpeg.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\freetype.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\flac.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\v120\Debug\dynamic\sfml-system-d.lib" "D:\Git\Proiect1\SnakeIP\packages\sfml-system.2.3.2.0\build\native\../..//build/native/lib/Win32\v120\Debug\sfml-main-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Git\Proiect1\SnakeIP\Debug\SnakeIP.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Git\Proiect1\SnakeIP\Debug\SnakeIP.lib" /MACHINE:X86 Debug\Main.obj
+         SnakeIP.vcxproj -> D:\Git\Proiect1\SnakeIP\Debug\SnakeIP.exe
+     1>Done Building Project "D:\Git\Proiect1\SnakeIP\SnakeIP\SnakeIP.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.37
