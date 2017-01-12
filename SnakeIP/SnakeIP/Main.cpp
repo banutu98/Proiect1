@@ -61,7 +61,7 @@ int Scor = 0, Scor_AI = 0, scoruri_n[11], lungime_AI, nrp = 0;
 struct
 {
 	int x, y;
-}pozitii[1000];
+}pozitii[10000];
 
 void initializare_AI()
 {
@@ -343,13 +343,13 @@ void powerUp()
 					if (snake[index].x == specialX && snake[index].y == specialY)
 						sigur = 0;
 				for (int index = 0; index < lungime_AI; index++)
-					if (snakeAI[index].x == food.x && snakeAI[index].y == food.y)
+					if (snakeAI[index].x == specialX && snakeAI[index].y == specialY)
 						sigur = 0;
 				if (specialX == food.x && specialY == food.y)
 					sigur = 0;
 				if (specialX >= (640 / 16) - 1 || specialX <= 1 || specialY <= 1 || specialY >= (480 / 16) - 1)
 					sigur = 0;
-				if (labirint[specialX][specialY] == 1)
+				if (labirint[specialY][specialX] == 1)
 					sigur = 0;
 				if (sigur == 0)
 				{
@@ -415,6 +415,8 @@ void desenareElemente()
 	t8.loadFromFile("sand.png");
 	Sprite sarpe(t1), mancare(t2), zid(t6), nisip(t8);
 
+	labirint[25][36] = 0;
+	labirint[26][37] = 0;
 	for (int i = 0; i < 30; i++)
 		for (int j = 0; j < 40; j++)
 		{
@@ -454,14 +456,14 @@ void desenare_AI()
 
 void directieAI()
 {
-	if (pozitii[nrp].x > snakeAI[0].y)
+	if (pozitii[nrp].x > snakeAI[0].y || pozitii[nrp].x == 0)
 		directie_AI = 0;
-	if (pozitii[nrp].x < snakeAI[0].y)
+	if (pozitii[nrp].x < snakeAI[0].y || pozitii[nrp].x == 29)
 		directie_AI = 3;
-	if (pozitii[nrp].y > snakeAI[0].x)
+	if (pozitii[nrp].y > snakeAI[0].x || pozitii[nrp].y == 0)
 		directie_AI = 2;
-	if (pozitii[nrp].y < snakeAI[0].x)
-		directie_AI = 1;	
+	if (pozitii[nrp].y < snakeAI[0].x || pozitii[nrp].y == 39)
+		directie_AI = 1;
 }
 
 void directieSarpe()
@@ -797,7 +799,7 @@ void snakeClassic()
 	srand(time(0));
 	window.setFramerateLimit(30);
 	nr_mancate = 0;
-	Scor = 0;
+	Scor = 0, delay = 0.3;
 	int selected_menu = 0;
 	char scor_char[10];
 	Font font;
@@ -905,7 +907,7 @@ void snakeCampaign()
 	srand(time(0));
 	window.setFramerateLimit(30);
 
-	Scor = 0;
+	Scor = 0, delay = 0.3;
 	int nr_nivel = 1, nr_labirint = 0;
 	int selected_menu;
 	nr_mancate = 0;
@@ -1085,11 +1087,12 @@ void drum_minim()
 	int xv, yv, i, prim, ultim, l, c, contor;
 	int dx[] = { 1,0,0,-1 };
 	int dy[] = { 0,-1,1,0 };
+	int left, right, up, down;
 	struct
 	{
 		int x, y;
-	}coada[1000];
-	
+	}coada[10000];
+
 	nrp = 0;
 	prim = ultim = 1;
 	l = snakeAI[0].x;
@@ -1099,12 +1102,12 @@ void drum_minim()
 	labirintAI[c][l] = 2;
 	while (prim <= ultim)
 	{
-		if (star.x != -2 && star.y != -2)
+		if (star.x >= 0 && star.y >= 0)
 		{
 			if (labirintAI[star.y][star.x] != 0)
 				break;
 		}
-		else if (multiplier.x != -2 && multiplier.y != -2)
+		else if (multiplier.x >= 0 && multiplier.y >= 0)
 		{
 			if (labirintAI[multiplier.y][multiplier.x] != 0)
 				break;
@@ -1117,6 +1120,14 @@ void drum_minim()
 		{
 			xv = l + dx[i];
 			yv = c + dy[i];
+			/*if (xv >= 40)
+				xv = 0;
+			else if (xv < 0)
+				xv = 39;
+			if (yv >= 30)
+				yv = 0;
+			else if (yv < 0)
+				yv = 29;*/
 			if (interior(xv, yv) == true && labirintAI[yv][xv] == 0)
 			{
 				labirintAI[yv][xv] = labirintAI[c][l] + 1;
@@ -1125,42 +1136,69 @@ void drum_minim()
 			}
 		}
 	}
-	pozitii[++nrp].x = food.y;
-	pozitii[nrp].y = food.x;
-	contor = labirintAI[food.y][food.x];
+	if (star.x >= 0 && star.y >= 0)
+	{
+		pozitii[++nrp].x = star.y;
+		pozitii[nrp].y = star.x;
+		contor = labirintAI[star.y][star.x];
+	}
+	else if (multiplier.x >= 0 && multiplier.y >= 0)
+	{
+		pozitii[++nrp].x = multiplier.y;
+		pozitii[nrp].y = multiplier.x;
+		contor = labirintAI[multiplier.y][multiplier.x];
+	}
+	else
+	{
+		pozitii[++nrp].x = food.y;
+		pozitii[nrp].y = food.x;
+		contor = labirintAI[food.y][food.x];
+	}
 	while (contor != 3)
 	{
-		if (labirintAI[pozitii[nrp].x - 1][pozitii[nrp].y] == contor - 1)
+		left = pozitii[nrp].x - 1;
+		right = pozitii[nrp].x + 1;
+		up = pozitii[nrp].y - 1;
+		down = pozitii[nrp].y + 1;
+		/*if (left < 0)
+			left = 39;
+		if (right >= 40)
+			right = 0;
+		if (up < 0)
+			up = 29;
+		if (down >= 30)
+			down = 0;*/
+		if (labirintAI[left][pozitii[nrp].y] == contor - 1)
 		{
 			nrp++;
-			pozitii[nrp].x = pozitii[nrp-1].x - 1;
-			pozitii[nrp].y = pozitii[nrp-1].y;
-			contor--;
-		}
-		else if (labirintAI[pozitii[nrp].x + 1][pozitii[nrp].y] == contor - 1)
-		{
-			nrp++;
-			pozitii[nrp].x = pozitii[nrp - 1].x + 1;
+			pozitii[nrp].x = left;
 			pozitii[nrp].y = pozitii[nrp - 1].y;
 			contor--;
 		}
-		else if (labirintAI[pozitii[nrp].x][pozitii[nrp].y - 1] == contor - 1)
+		else if (labirintAI[right][pozitii[nrp].y] == contor - 1)
 		{
 			nrp++;
-			pozitii[nrp].x = pozitii[nrp - 1].x;
-			pozitii[nrp].y = pozitii[nrp - 1].y - 1;
+			pozitii[nrp].x = right;
+			pozitii[nrp].y = pozitii[nrp - 1].y;
 			contor--;
 		}
-		else if (labirintAI[pozitii[nrp].x][pozitii[nrp].y + 1] == contor - 1)
+		else if (labirintAI[pozitii[nrp].x][up] == contor - 1)
 		{
 			nrp++;
 			pozitii[nrp].x = pozitii[nrp - 1].x;
-			pozitii[nrp].y = pozitii[nrp - 1].y + 1;
+			pozitii[nrp].y = up;
+			contor--;
+		}
+		else if (labirintAI[pozitii[nrp].x][down] == contor - 1)
+		{
+			nrp++;
+			pozitii[nrp].x = pozitii[nrp - 1].x;
+			pozitii[nrp].y = down;
 			contor--;
 		}
 	}
 	/*for (int i = nrp; i >= 1; i--)
-		cout << labirintAI[pozitii[i].x][pozitii[i].y] << " ";*/
+	cout << labirintAI[pozitii[i].x][pozitii[i].y] << " ";*/
 }
 
 void snakeVersus()
@@ -1170,7 +1208,7 @@ void snakeVersus()
 	srand(time(0));
 	window.setFramerateLimit(30);
 	nr_mancate = 0;
-	Scor = 0, Scor_AI = 0;
+	Scor = 0, Scor_AI = 0, delay_AI = 0.3, delay = 0.3;
 	int selected_menu = 0;
 	char scor_char[10], scorAI_char[10];
 	Font font;
@@ -1255,6 +1293,8 @@ void snakeVersus()
 		{
 			timer_AI = 0;
 			miscare_AI();
+			intializare_labAI();
+			drum_minim();
 		}
 		window.clear();
 
