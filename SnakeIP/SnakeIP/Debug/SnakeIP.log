@@ -1,25 +1,25 @@
 ﻿  Main.cpp
 c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(57): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(124): warning C4305: '-=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(148): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(238): warning C4305: '-=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(262): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(370): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(377): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(384): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(391): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(425): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(430): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(437): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(441): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(452): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(799): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(802): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(907): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(910): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1208): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1211): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1379): warning C4101: 'selected_menu': unreferenced local variable
-c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1980): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(125): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(149): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(239): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(263): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(371): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(378): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(385): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(392): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(426): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(431): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(438): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(442): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(453): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(808): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(811): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(916): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(919): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1218): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1221): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1389): warning C4101: 'selected_menu': unreferenced local variable
+c:\users\serban\desktop\proiect1\snakeip\snakeip\main.cpp(1990): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   SnakeIP.vcxproj -> C:\Users\Serban\Desktop\Proiect1\SnakeIP\Debug\SnakeIP.exe
   SnakeIP.vcxproj -> C:\Users\Serban\Desktop\Proiect1\SnakeIP\Debug\SnakeIP.pdb (Full PDB)

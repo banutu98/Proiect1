@@ -1,1 +1,1 @@
-no_name 0 no_name 0 no_name 0 no_name 0 no_name 0 no_name 0 no_name 0 no_name 0 no_name 0 no_name 0 
+scor_nou 75 scor_nou 60 scor_nou 35 scor_nou 10 scor_nou 10 scor_nou 10 scor_nou 5 scor_nou 0 no_name 0 no_name 0 
