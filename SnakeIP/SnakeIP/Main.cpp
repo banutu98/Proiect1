@@ -11,13 +11,18 @@ using namespace std;
 //declarari
 RenderWindow window(VideoMode(640, 512), "Snake v6.0");
 Texture t1, t2, t3, t4, t5, t6, t7, t8, t9;
-float timer = 0, timer_AI = 0;
+float timer = 0, timer_AI = 0, timer2 = 0;
 int aparut = 0;
 
 struct Snake
 {
 	int x = 640 / 32, y = 480 / 32;
 }snake[100];
+
+struct Snake2
+{
+	int x = 640 / 32, y = 480 / 32;
+}snake2[100];
 
 struct SnakeAI
 {
@@ -55,10 +60,10 @@ struct Scor
 	int numeric;
 }scores[10];
 
-int directie = 2, lungime, lungime_init, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0, nr_mancate, nr_mancate_AI, verif_lab;
-float delay = 0.2, delay_AI = 0.2;
-int labirint[30][40], labirintAI[30][40], directie_AI = 0;
-int Scor = 0, Scor_AI = 0, scoruri_n[11], lungime_AI, nrp = 0;
+int directie = 2, lungime, lungime_init, OK = 1, nr_mutari = 0, este_mancat = 1, is_rand = 1, r, specialX, specialY, counter = 0, directie_aleasa = 0, directie_aleasa2 = 2, nr_mancate, nr_mancate_AI, verif_lab, nr_mancate2;
+float delay = 0.2, delay_AI = 0.2, delay2 = 0.2;
+int labirint[30][40], labirintAI[30][40], directie_AI = 0, directie2 = 0;
+int Scor = 0, Scor_AI = 0, Scor2 = 0, scoruri_n[11], lungime_AI, lungime2, nrp = 0;
 
 struct
 {
@@ -76,6 +81,134 @@ void initializare_AI()
 	snakeAI[3].x = -4;
 	snakeAI[3].y = -4;
 	lungime_AI = 4;
+}
+
+void intializare_player2()
+{
+	snake2[0].x = 640 / 32 + 14;
+	snake2[0].y = 480 / 32 - 12;
+	snake2[1].x = -4;
+	snake2[1].y = -4;
+	snake2[2].x = -4;
+	snake2[2].y = -4;
+	snake2[3].x = -4;
+	snake2[3].y = -4;
+	lungime2 = 4;
+}
+
+void miscare_player2()
+{
+		//miscare sarpe
+		for (int index = lungime2; index>0; index--)
+		{
+			snake2[index].x = snake2[index - 1].x;
+			snake2[index].y = snake2[index - 1].y;
+		}
+		if (directie2 == 0)
+			snake2[0].y += 1;
+		if (directie2 == 1)
+			snake2[0].x -= 1;
+		if (directie2 == 2)
+			snake2[0].x += 1;
+		if (directie2 == 3)
+			snake2[0].y -= 1;
+		directie_aleasa2 = 0;
+
+		//fruct
+		if (snake2[0].x == food.x && snake2[0].y == food.y)
+		{
+			verif_lab = 1;
+			lungime2++;
+			food.x = rand() % 640 / 16;
+			food.y = rand() % 480 / 16;
+			int sigur = 1;
+			do
+			{
+				sigur = 1;
+				for (int index = 0; index < lungime; index++)
+					if (snake[index].x == food.x && snake[index].y == food.y)
+						sigur = 0;
+				for (int index = 0; index < lungime_AI; index++)
+					if (snake2[index].x == food.x && snake2[index].y == food.y)
+						sigur = 0;
+				if (food.x >= (640 / 16) - 1 || food.x <= 1 || food.y <= 1 || food.y >= (480 / 16) - 1)
+					sigur = 0;
+				if (labirint[food.y][food.x] == 1)
+					sigur = 0;
+				if (sigur == 0)
+				{
+					food.x = rand() % 640 / 16;
+					food.y = rand() % 480 / 16;
+				}
+			} while (sigur == 0);
+			nr_mancate++;
+			nr_mancate2++;
+			Scor2 += 5;
+			if (nr_mancate2 % 2 == 0 && delay2 > 0.1)
+				delay2 -= 0.02;
+			if (nr_mancate % 5 == 0)
+			{
+				nr_mutari = 0;
+				este_mancat = 1;
+			}
+
+		}
+
+		//steaua
+		if (snake2[0].x == star.x && snake2[0].y == star.y)
+		{
+			este_mancat = 0;
+			counter++;
+			is_rand = 1;
+			star.x = -2;
+			star.y = -2;
+			Scor2 += 10 * (30 - nr_mutari);
+		}
+
+		//slow
+		if (snake2[0].x == slow.x && snake2[0].y == slow.y)
+		{
+			if (delay2 <= 0.3)
+				delay2 += 0.1;
+			este_mancat = 0;
+			counter++;
+			is_rand = 1;
+			slow.x = -2;
+			slow.y = -2;
+		}
+
+		//scadere lungime
+		if (snake2[0].x == cut.x && snake2[0].y == cut.y)
+		{
+			if (lungime2 > 3)
+				lungime2 /= 2;
+			este_mancat = 0;
+			counter++;
+			is_rand = 1;
+			cut.x = -2;
+			cut.y = -2;
+		}
+
+		//dublare scor
+		if (snake2[0].x == multiplier.x && snake2[0].y == multiplier.y)
+		{
+			if (Scor2 > 0)
+				Scor2 *= 2;
+			else Scor2 += 10;
+			este_mancat = 0;
+			counter++;
+			is_rand = 1;
+			multiplier.x = -2;
+			multiplier.y = -2;
+		}
+
+		//trecerea prin pereti
+		if (snake2[0].x >= 640 / 16) snake2[0].x = 0;
+		else if (snake2[0].x < 0) snake2[0].x = 624 / 16;
+
+		if (snake2[0].y >= 480 / 16) snake2[0].y = 0;
+		else if (snake2[0].y < 0) snake2[0].y = 464 / 16;
+
 }
 
 void miscare_AI()
@@ -314,6 +447,26 @@ bool coliziune()
 	return false;
 }
 
+bool coliziune_player()
+{
+	if (labirint[snake2[0].y][snake2[0].x] == 1)
+		return true;
+	for (int index = 1; index < lungime2; index++)
+		if (snake2[index].x == snake2[0].x && snake2[index].y == snake2[0].y)
+			return true;
+	for (int index = 0; index < lungime; index++)
+		if (snake2[0].x == snake[index].x && snake2[0].y == snake[index].y)
+			return true;
+	return false;
+}
+bool coliziune_cu_player()
+{
+	for (int index = 0; index < lungime2; index++)
+		if (snake[0].x == snake2[index].x && snake[0].y == snake2[index].y)
+			return true;
+	return false;
+}
+
 bool coliziune_cu_AI()
 {
 	for (int index = 0; index < lungime_AI; index++)
@@ -456,6 +609,17 @@ void desenare_AI()
 		window.draw(sarpe_ai);
 	}
 }
+void desenare_Player()
+{
+	t9.loadFromFile("magenta.png");
+	Sprite sarpe2(t9);
+
+	for (int index = 0; index < lungime2; index++)
+	{
+		sarpe2.setPosition(snake2[index].x * 16, snake2[index].y * 16);
+		window.draw(sarpe2);
+	}
+}
 
 void directieAI()
 {
@@ -475,6 +639,30 @@ void directieAI()
 		directie_AI = 1;
 	else if(pozitii[nrp].y == 39 && snakeAI[0].x == 0)
 		directie_AI = 1;
+}
+
+void directiePlayer2()
+{
+	if (Keyboard::isKeyPressed(Keyboard::A) && directie2 != 2 && directie_aleasa2 == 0)
+	{
+		directie2 = 1;
+		directie_aleasa2 = 1;
+	}
+	if (Keyboard::isKeyPressed(Keyboard::D) && directie2 != 1 && directie_aleasa2 == 0)
+	{
+		directie2 = 2;
+		directie_aleasa2 = 1;
+	}
+	if (Keyboard::isKeyPressed(Keyboard::W) && directie2 != 0 && directie_aleasa2 == 0)
+	{
+		directie2 = 3;
+		directie_aleasa2 = 1;
+	}
+	if (Keyboard::isKeyPressed(Keyboard::S) && directie2 != 3 && directie_aleasa2 == 0)
+	{
+		directie2 = 0;
+		directie_aleasa2 = 1;
+	}
 }
 
 void directieSarpe()
@@ -800,6 +988,7 @@ void meniu();
 void submeniu_classic();
 void submeniu_versus();
 void submeniu_scor();
+void submeniu_pvp();
 void scoruri(int index);
 
 //moduri joc
@@ -1365,13 +1554,186 @@ void snakeVersus()
 
 //meniu
 
+void snakePvp()
+{
+		intializare_player2();
+		Clock clock;
+		srand(time(0));
+		window.setFramerateLimit(30);
+		nr_mancate = 0;
+		Scor = 0, Scor2 = 0, delay2 = 0.2, delay = 0.2;
+		int selected_menu = 0;
+		char scor_char[10], scor2_char[10];
+		Font font;
+		font.loadFromFile("arial.ttf");
+		Text text[3];
+		text[1].setColor(Color::White);
+		text[1].setString("PVP Mode");
+		text[1].setPosition(260, 480);
+		text[1].setFont(font);
+		text[1].setCharacterSize(25);
+
+		while (window.isOpen())
+		{
+			float timp = clock.getElapsedTime().asSeconds();
+			clock.restart();
+			timer += timp;
+			timer2 += timp;
+			Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == Event::Closed)
+					window.close();
+
+			}
+
+			if (Event::KeyReleased && event.key.code == Keyboard::Escape)
+			{
+				selected_menu = 1;
+				break;
+			}
+
+			directieSarpe();
+
+			if (timer > delay)
+			{
+				timer = 0;
+				miscareSarpe();
+				if (coliziune() == true || coliziune_cu_player() == true)
+				{
+					char scor_curent[33];
+					ifstream fin("scores_pvp.txt");
+					for (int i = 0; i < 10; i++)
+					{
+						fin >> scor_curent;
+						scores[i].nume[0] = '\0';
+						strcat_s(scores[i].nume, scor_curent);
+
+						fin >> scor_curent;
+						scores[i].nr[0] = '\0';
+						strcat_s(scores[i].nr, scor_curent);
+						scores[i].numeric = stoi(scor_curent);
+					}
+					fin.clear();
+					fin.close();
+					ofstream fout("scores_pvp.txt");
+					for (int i = 0; i < 10; i++)
+						if (Scor2 >= scores[i].numeric)
+						{
+							for (int j = 9; j > i; j--)
+								scores[j] = scores[j - 1];
+							scores[i].numeric = Scor2;
+							scores[i].nume[0] = '\0';
+							char input_name[50];
+							ShowWindow(GetConsoleWindow(), SW_RESTORE);
+							cout << "Magenta Player Won! Please enter your name:\n";
+							cin >> input_name;
+							ShowWindow(GetConsoleWindow(), SW_HIDE);
+							system("cls");
+							window.requestFocus();
+							strcat_s(scores[i].nume, input_name);
+							scores[i].nr[0] = '\0';
+							_itoa_s(Scor2, scores[i].nr, 10);
+							break;
+						}
+					for (int i = 0; i < 10; i++)
+						fout << scores[i].nume << " " << scores[i].nr << " ";
+					fout.close();
+					scoruri(4);
+				}
+				if (aparut == 1)
+					nr_mutari++;
+			}
+
+			directiePlayer2();
+
+			if (timer2 > delay2)
+			{
+				timer2 = 0;
+				miscare_player2();
+				if (coliziune_player() == true)
+				{
+					char scor_curent[33];
+					ifstream fin("scores_pvp.txt");
+					for (int i = 0; i < 10; i++)
+					{
+						fin >> scor_curent;
+						scores[i].nume[0] = '\0';
+						strcat_s(scores[i].nume, scor_curent);
+
+						fin >> scor_curent;
+						scores[i].nr[0] = '\0';
+						strcat_s(scores[i].nr, scor_curent);
+						scores[i].numeric = stoi(scor_curent);
+					}
+					fin.clear();
+					fin.close();
+					ofstream fout("scores_pvp.txt");
+					for (int i = 0; i < 10; i++)
+						if (Scor >= scores[i].numeric)
+						{
+							for (int j = 9; j > i; j--)
+								scores[j] = scores[j - 1];
+							scores[i].numeric = Scor;
+							scores[i].nume[0] = '\0';
+							char input_name[50];
+							ShowWindow(GetConsoleWindow(), SW_RESTORE);
+							cout << "Green Player Won! Please enter your name:\n";
+							cin >> input_name;
+							ShowWindow(GetConsoleWindow(), SW_HIDE);
+							system("cls");
+							window.requestFocus();
+							strcat_s(scores[i].nume, input_name);
+							scores[i].nr[0] = '\0';
+							_itoa_s(Scor, scores[i].nr, 10);
+							break;
+						}
+					for (int i = 0; i < 10; i++)
+						fout << scores[i].nume << " " << scores[i].nr << " ";
+					fout.close();
+					scoruri(4);
+				}
+			}
+			window.clear();
+
+			_itoa_s(Scor, scor_char, 10);
+
+			text[0].setColor(Color::Green);
+			text[0].setFont(font);
+			text[0].setPosition(10, 480);
+			text[0].setString(scor_char);
+			text[0].setCharacterSize(25);
+
+			_itoa_s(Scor2, scor2_char, 10);
+
+			text[2].setColor(Color::Magenta);
+			text[2].setFont(font);
+			text[2].setPosition(600, 480);
+			text[2].setString(scor2_char);
+			text[2].setCharacterSize(25);
+
+			for (int i = 0; i <= 2; i++)
+				window.draw(text[i]);
+
+			desenareElemente();
+
+			desenare_Player();
+
+			powerUp();
+
+			window.display();
+		}
+
+		if (selected_menu == 1)
+			submeniu_pvp();
+}
 void meniu()
 {
 	window.clear();
 	int selectedIndex = 0;
 	Font font;
 	font.loadFromFile("Beef'd.ttf");
-	Text text[6];
+	Text text[7];
 
 	text[0].setFont(font);
 	text[0].setColor(Color::Red);
@@ -1382,38 +1744,44 @@ void meniu()
 	text[1].setFont(font);
 	text[1].setColor(Color::White);
 	text[1].setString("Campaign mode");
-	text[1].setPosition(100, 160);
+	text[1].setPosition(100, 150);
 	text[1].setCharacterSize(20);
 
 	text[2].setFont(font);
 	text[2].setColor(Color::White);
 	text[2].setString("Versus mode");
-	text[2].setPosition(100, 220);
+	text[2].setPosition(100, 200);
 	text[2].setCharacterSize(20);
 
 	text[3].setFont(font);
 	text[3].setColor(Color::White);
-	text[3].setString("High Scores");
-	text[3].setPosition(100, 280);
+	text[3].setString("Pvp");
+	text[3].setPosition(100, 250);
 	text[3].setCharacterSize(20);
 
 	text[4].setFont(font);
 	text[4].setColor(Color::White);
-	text[4].setString("Exit");
-	text[4].setPosition(100, 340);
+	text[4].setString("High Scores");
+	text[4].setPosition(100, 300);
 	text[4].setCharacterSize(20);
 
 	text[5].setFont(font);
-	text[5].setColor(Color::Magenta);
-	text[5].setString("Snake 6.0");
-	text[5].setPosition(200, 10);
+	text[5].setColor(Color::White);
+	text[5].setString("Exit");
+	text[5].setPosition(100, 350);
 	text[5].setCharacterSize(20);
+
+	text[6].setFont(font);
+	text[6].setColor(Color::Magenta);
+	text[6].setString("Snake 6.0");
+	text[6].setPosition(200, 10);
+	text[6].setCharacterSize(20);
 
 	int selected_menu;
 
 	while (window.isOpen())
 	{
-		for (int i = 0; i <= 5; i++)
+		for (int i = 0; i <= 6; i++)
 			window.draw(text[i]);
 		window.display();
 		window.clear();
@@ -1427,7 +1795,7 @@ void meniu()
 			//meniu jos
 			if (Keyboard::isKeyPressed(Keyboard::Down))
 			{
-				if (selectedIndex < 4)
+				if (selectedIndex < 5)
 				{
 					text[selectedIndex].setColor(Color::White);
 					selectedIndex++;
@@ -1453,7 +1821,7 @@ void meniu()
 				else
 				{
 					text[selectedIndex].setColor(Color::White);
-					selectedIndex = 4;
+					selectedIndex = 5;
 					text[selectedIndex].setColor(Color::Red);
 				}
 			}
@@ -1484,10 +1852,14 @@ void meniu()
 			break;
 
 		case 3:
-			submeniu_scor();
+			submeniu_pvp();
 			break;
 
 		case 4:
+			submeniu_scor();
+			break;
+
+		case 5:
 			window.close();
 			break;
 	}
@@ -1833,6 +2205,172 @@ void submeniu_versus()
 
 //submeniu scoruri
 
+void submeniu_pvp()
+{
+		window.clear();
+		int selectedIndex = 1;
+		Font font;
+		font.loadFromFile("Beef'd.ttf");
+		Text text[8];
+
+		text[0].setFont(font);
+		text[0].setColor(Color::Magenta);
+		text[0].setString("Select a map");
+		text[0].setPosition(180, 10);
+		text[0].setCharacterSize(20);
+
+		text[1].setFont(font);
+		text[1].setColor(Color::Red);
+		text[1].setString("Map 0");
+		text[1].setPosition(100, 100);
+		text[1].setCharacterSize(20);
+
+		text[2].setFont(font);
+		text[2].setColor(Color::White);
+		text[2].setString("Map 1");
+		text[2].setPosition(100, 150);
+		text[2].setCharacterSize(20);
+
+		text[3].setFont(font);
+		text[3].setColor(Color::White);
+		text[3].setString("Map 2");
+		text[3].setPosition(100, 200);
+		text[3].setCharacterSize(20);
+
+		text[4].setFont(font);
+		text[4].setColor(Color::White);
+		text[4].setString("Map 3");
+		text[4].setPosition(100, 250);
+		text[4].setCharacterSize(20);
+
+		text[5].setFont(font);
+		text[5].setColor(Color::White);
+		text[5].setString("Map 4");
+		text[5].setPosition(100, 300);
+		text[5].setCharacterSize(20);
+
+		text[6].setFont(font);
+		text[6].setColor(Color::White);
+		text[6].setString("Map 5");
+		text[6].setPosition(100, 350);
+		text[6].setCharacterSize(20);
+
+		text[7].setFont(font);
+		text[7].setColor(Color::White);
+		text[7].setString("Map 6");
+		text[7].setPosition(100, 400);
+		text[7].setCharacterSize(20);
+
+		int selected_menu = 0;
+
+		while (window.isOpen())
+		{
+			for (int i = 0; i <= 7; i++)
+				window.draw(text[i]);
+			window.display();
+			window.clear();
+
+			Event event;
+			while (window.pollEvent(event))
+			{
+				if (event.type == Event::Closed)
+					window.close();
+
+				//meniu jos
+				if (Keyboard::isKeyPressed(Keyboard::Down))
+				{
+					if (selectedIndex < 7)
+					{
+						text[selectedIndex].setColor(Color::White);
+						selectedIndex++;
+						text[selectedIndex].setColor(Color::Red);
+					}
+					else
+					{
+						text[selectedIndex].setColor(Color::White);
+						selectedIndex = 1;
+						text[selectedIndex].setColor(Color::Red);
+					}
+				}
+
+				//meniu sus
+				if (Keyboard::isKeyPressed(Keyboard::Up))
+				{
+					if (selectedIndex > 1)
+					{
+						text[selectedIndex].setColor(Color::White);
+						selectedIndex--;
+						text[selectedIndex].setColor(Color::Red);
+					}
+					else
+					{
+						text[selectedIndex].setColor(Color::White);
+						selectedIndex = 7;
+						text[selectedIndex].setColor(Color::Red);
+					}
+				}
+
+
+			}
+
+			//meniu select
+
+			if (Keyboard::isKeyPressed(Keyboard::Space))
+			{
+				selected_menu = 1;
+				break;
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Escape))
+			{
+				selected_menu = 2;
+				break;
+			}
+		}
+
+		if (selected_menu == 1)
+		{
+			switch (selectedIndex)
+			{
+			case 1:
+				initLabirint0();
+				snakePvp();
+				break;
+
+			case 2:
+				initLabirint1();
+				snakePvp();
+				break;
+
+			case 3:
+				initLabirint2();
+				snakePvp();
+				break;
+
+			case 4:
+				initLabirint3();
+				snakePvp();
+				break;
+
+			case 5:
+				initLabirint4();
+				snakePvp();
+				break;
+
+			case 6:
+				initLabirint5();
+				snakePvp();
+				break;
+
+			case 7:
+				initLabirint6();
+				snakePvp();
+				break;
+			}
+		}
+		else if (selected_menu == 2)
+			meniu();
+}
 void submeniu_scor()
 {
 	window.clear();
@@ -1844,38 +2382,44 @@ void submeniu_scor()
 	text[0].setFont(font);
 	text[0].setColor(Color::Magenta);
 	text[0].setString("Select a mode");
-	text[0].setPosition(150, 50);
+	text[0].setPosition(150, 30);
 	text[0].setCharacterSize(20);
 
 	text[1].setFont(font);
 	text[1].setColor(Color::Red);
 	text[1].setString("Classic");
-	text[1].setPosition(100, 160);
+	text[1].setPosition(100, 120);
 	text[1].setCharacterSize(20);
 
 	text[2].setFont(font);
 	text[2].setColor(Color::White);
 	text[2].setString("Campaign");
-	text[2].setPosition(100, 220);
+	text[2].setPosition(100, 180);
 	text[2].setCharacterSize(20);
 
 	text[3].setFont(font);
 	text[3].setColor(Color::White);
 	text[3].setString("Versus");
-	text[3].setPosition(100, 280);
+	text[3].setPosition(100, 240);
 	text[3].setCharacterSize(20);
 
 	text[4].setFont(font);
 	text[4].setColor(Color::White);
-	text[4].setString("Reset scores");
-	text[4].setPosition(100, 400);
+	text[4].setString("Pvp");
+	text[4].setPosition(100, 300);
 	text[4].setCharacterSize(20);
+
+	text[5].setFont(font);
+	text[5].setColor(Color::White);
+	text[5].setString("Reset scores");
+	text[5].setPosition(100, 360);
+	text[5].setCharacterSize(20);
 
 	int selected_menu;
 
 	while (window.isOpen())
 	{
-		for (int i = 0; i <= 4; i++)
+		for (int i = 0; i <= 5; i++)
 			window.draw(text[i]);
 		window.display();
 		window.clear();
@@ -1889,7 +2433,7 @@ void submeniu_scor()
 			//meniu jos
 			if (Keyboard::isKeyPressed(Keyboard::Down))
 			{
-				if (selectedIndex < 4)
+				if (selectedIndex < 5)
 				{
 					text[selectedIndex].setColor(Color::White);
 					selectedIndex++;
@@ -1915,7 +2459,7 @@ void submeniu_scor()
 				else
 				{
 					text[selectedIndex].setColor(Color::White);
-					selectedIndex = 4;
+					selectedIndex = 5;
 					text[selectedIndex].setColor(Color::Red);
 				}
 			}
@@ -1985,6 +2529,9 @@ void scoruri(int index)
 			break;
 
 		case 4:
+			strcat_s(nume_fisier, "scores_pvp.txt");
+			break;
+		case 5:
 			resetare_scoruri();
 			break;
 	}
