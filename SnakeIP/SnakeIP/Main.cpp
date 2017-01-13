@@ -3,6 +3,8 @@
 #include <fstream>
 #include <time.h>
 #include <stdio.h>
+#include <Windows.h>
+#define _WIN32_WINNT
 using namespace sf;
 using namespace std;
 
@@ -872,7 +874,14 @@ void snakeClassic()
 								scores[j] = scores[j - 1];
 							scores[i].numeric = Scor;
 							scores[i].nume[0] = '\0';
-							strcat_s(scores[i].nume, "scor_nou");
+							char input_name[50];
+							ShowWindow(GetConsoleWindow(), SW_RESTORE);
+							cout << "New Highscore. Enter your name:\n";
+							cin >> input_name;
+							ShowWindow(GetConsoleWindow(), SW_HIDE);
+							system("cls");
+							window.requestFocus();
+							strcat_s(scores[i].nume, input_name);
 							scores[i].nr[0] = '\0';
 							_itoa_s(Scor, scores[i].nr, 10);
 							break;
@@ -1028,7 +1037,14 @@ void snakeCampaign()
 							scores[j] = scores[j - 1];
 						scores[i].numeric = Scor;
 						scores[i].nume[0] = '\0';
-						strcat_s(scores[i].nume, "scor_nou");
+						char input_name[50];
+						ShowWindow(GetConsoleWindow(), SW_RESTORE);
+						cout << "New Highscore. Enter your name:\n";
+						cin >> input_name;
+						ShowWindow(GetConsoleWindow(), SW_HIDE);
+						system("cls");
+						window.requestFocus();
+						strcat_s(scores[i].nume, input_name);
 						scores[i].nr[0] = '\0';
 						_itoa_s(Scor, scores[i].nr, 10);
 						break;
@@ -1281,7 +1297,14 @@ void snakeVersus()
 							scores[j] = scores[j - 1];
 						scores[i].numeric = Scor;
 						scores[i].nume[0] = '\0';
-						strcat_s(scores[i].nume, "scor_nou");
+						char input_name[50];
+						ShowWindow(GetConsoleWindow(), SW_RESTORE);
+						cout << "New Highscore. Enter your name:\n";
+						cin >> input_name;
+						ShowWindow(GetConsoleWindow(), SW_HIDE);
+						system("cls");
+						window.requestFocus();
+						strcat_s(scores[i].nume, input_name);
 						scores[i].nr[0] = '\0';
 						_itoa_s(Scor, scores[i].nr, 10);
 						break;
@@ -2021,6 +2044,7 @@ void scoruri(int index)
 
 int main()
 {
+	ShowWindow(GetConsoleWindow(), SW_HIDE);
 	meniu();
 	return 0;
 }
