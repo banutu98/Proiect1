@@ -1066,7 +1066,11 @@ void snakeClassic()
 							char input_name[50];
 							ShowWindow(GetConsoleWindow(), SW_RESTORE);
 							cout << "New Highscore. Enter your name:\n";
-							cin>>input_name;
+							gets_s(input_name);
+							input_name[15] = '\0';
+							for (int i = 0; i < strlen(input_name); i++)
+								if (input_name[i] == ' ')
+									input_name[i] = '_';
 							ShowWindow(GetConsoleWindow(), SW_HIDE);
 							system("cls");
 							window.requestFocus();
@@ -1085,7 +1089,7 @@ void snakeClassic()
 				nr_mutari++;
 		}
 		window.clear();
-
+		
 		_itoa_s(Scor, scor_char, 10);
 		
 		text[0].setColor(Color::White);
@@ -1229,7 +1233,11 @@ void snakeCampaign()
 						char input_name[50];
 						ShowWindow(GetConsoleWindow(), SW_RESTORE);
 						cout << "New Highscore. Enter your name:\n";
-						cin >> input_name;
+						gets_s(input_name);
+						input_name[15] = '\0';
+						for (int i = 0; i < strlen(input_name); i++)
+							if (input_name[i] == ' ')
+								input_name[i] = '_';
 						ShowWindow(GetConsoleWindow(), SW_HIDE);
 						system("cls");
 						window.requestFocus();
@@ -1489,7 +1497,11 @@ void snakeVersus()
 						char input_name[50];
 						ShowWindow(GetConsoleWindow(), SW_RESTORE);
 						cout << "New Highscore. Enter your name:\n";
-						cin >> input_name;
+						gets_s(input_name);
+						input_name[15] = '\0';
+						for (int i = 0; i < strlen(input_name); i++)
+							if (input_name[i] == ' ')
+								input_name[i] = '_';
 						ShowWindow(GetConsoleWindow(), SW_HIDE);
 						system("cls");
 						window.requestFocus();
@@ -1627,7 +1639,11 @@ void snakePvp()
 							char input_name[50];
 							ShowWindow(GetConsoleWindow(), SW_RESTORE);
 							cout << "Magenta Player Won! Please enter your name:\n";
-							cin >> input_name;
+							gets_s(input_name);
+							input_name[15] = '\0';
+							for (int i = 0; i < strlen(input_name); i++)
+								if (input_name[i] == ' ')
+									input_name[i] = '_';
 							ShowWindow(GetConsoleWindow(), SW_HIDE);
 							system("cls");
 							window.requestFocus();
@@ -1730,11 +1746,12 @@ void snakePvp()
 void meniu()
 {
 	window.clear();
+
 	int selectedIndex = 0;
 	Font font;
 	font.loadFromFile("Beef'd.ttf");
 	Text text[7];
-
+	
 	text[0].setFont(font);
 	text[0].setColor(Color::Red);
 	text[0].setString("Classic mode");
@@ -2493,17 +2510,20 @@ void resetare_scoruri()
 	ofstream fout1("scores_classic.txt");
 	ofstream fout2("scores_campaign.txt");
 	ofstream fout3("scores_versus.txt");
+	ofstream fout4("scores_pvp.txt");
 
 	for (int i = 0; i <= 9; i++)
 	{
 		fout1 << "no_name " << "0 ";
 		fout2 << "no_name " << "0 ";
 		fout3 << "no_name " << "0 ";
+		fout4 << "no_name " << "0 ";
 	}
 
 	fout1.close();
 	fout2.close();
 	fout3.close();
+	fout4.close();
 }
 
 void scoruri(int index)
@@ -2548,16 +2568,16 @@ void scoruri(int index)
 
 	for (int i = 1; i <= 10; i++)
 	{
-		fin_scor >> scores[i-1].nume >> scores[i-1].nr;
+		fin_scor >> scores[i - 1].nume >> scores[i - 1].nr;
 		scor_de_afisat[0] = '\0';
-		strcat_s(scor_de_afisat, scores[i-1].nume);
+		strcat_s(scor_de_afisat, scores[i - 1].nume);
 		strcat_s(scor_de_afisat, " - ");
 		strcat_s(scor_de_afisat, scores[i-1].nr);
 		scores_text[i].setColor(Color::White);
 		scores_text[i].setFont(font);
 		scores_text[i].setCharacterSize(20);
 		scores_text[i].setString(scor_de_afisat);
-		scores_text[i].setPosition(100, 35*i + 40);
+		scores_text[i].setPosition(100, 35 * i + 40);
 	}
 
 	int selected_menu = 0;
