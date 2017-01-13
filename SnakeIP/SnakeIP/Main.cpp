@@ -9,7 +9,7 @@ using namespace sf;
 using namespace std;
 
 //declarari
-RenderWindow window(VideoMode(640, 512), "Snake v5.5");
+RenderWindow window(VideoMode(640, 512), "Snake v6.0");
 Texture t1, t2, t3, t4, t5, t6, t7, t8, t9;
 float timer = 0, timer_AI = 0;
 int aparut = 0;
@@ -877,7 +877,7 @@ void snakeClassic()
 							char input_name[50];
 							ShowWindow(GetConsoleWindow(), SW_RESTORE);
 							cout << "New Highscore. Enter your name:\n";
-							cin >> input_name;
+							cin>>input_name;
 							ShowWindow(GetConsoleWindow(), SW_HIDE);
 							system("cls");
 							window.requestFocus();
@@ -1405,7 +1405,7 @@ void meniu()
 
 	text[5].setFont(font);
 	text[5].setColor(Color::Magenta);
-	text[5].setString("Snake 5.5");
+	text[5].setString("Snake 6.0");
 	text[5].setPosition(200, 10);
 	text[5].setCharacterSize(20);
 
@@ -2045,6 +2045,9 @@ void scoruri(int index)
 int main()
 {
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
+	sf::Image image;
+	image.loadFromFile("snake_icon-5.png");
+	window.setIcon(48, 48, image.getPixelsPtr());
 	meniu();
 	return 0;
 }
